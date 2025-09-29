@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# SIMETRICA
+Proyecto web desarrollado en **React + TypeScript**. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 Requisitos previos
 
-Currently, two official plugins are available:
+Antes de ejecutar el proyecto asegúrate de tener instalado:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Node.js](https://nodejs.org/) (versión 18 o superior recomendada)
+- [npm](https://www.npmjs.com/) o [yarn](https://yarnpkg.com/)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ⚙️ Instalación
 
-## Expanding the ESLint configuration
+Clona el repositorio:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+git clone https://github.com/hws-1028/simetrica.git
+cd simetrica
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+Instala la dependencias
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## ▶️ Ejecución en desarrollo
+Para correr el proyecto en modo desarrollo:
+```bash
+npm run dev
 ```
+El servidor se abrirá normalmente en:
+```bash
+http://localhost:5173/
+```
+
+--------------------------------------------------------------------------------------------------------------------------
+# 📝 Avance realizado - 29/09/2025
+
+En esta entrega implementé la página principal (Home) del proyecto junto con sus estilos y un layout de cabecera (Header).
+
+## Home Page
+- Creé el componente HomePages.tsx en la carpeta src/pages/.
+- Le asigné un fondo con imagen que cubre toda la vista (100vw x 100vh).
+- Integré el header y preparé el espacio para futuras secciones (ej: "Nuestros proyectos").
+- Apliqué estilos en HomeStyle.css para ajustar el fondo y la estructura general.
+
+## Header Layout
+
+- Desarrollé el componente HeaderLayout.tsx en src/layouts/.
+- Incluye el logo de Simétrica y el título de la aplicación.
+- Implementé un menú de navegación con enlaces a las principales secciones del sitio: Inicio, Asociados, Proyectos, Diseños, Trabaja con nosotros y Contacto.
+- Definí estilos en HeaderStyle.css para que el header sea fijo, transparente con fondo difuminado y con navegación alineada a la derecha.
