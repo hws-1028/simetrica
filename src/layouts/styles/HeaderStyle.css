@@ -1,0 +1,50 @@
+header {
+    width: 100vw;
+    display: flex;
+    padding: 0.5rem 2rem;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(80, 70, 65, 0.9);
+    color: #FFFF;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-container img {
+    width: 20px;
+    height: 30px;
+}
+
+.logo-container h1 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+.nav-container {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-container a {
+    color: #FFFF;
+    text-decoration: none;
+    font-size: 0.8rem;
+}
+
+.nav-container .link {
+    background: #7E4A35;
+    padding: 0.6rem 1.2rem;
+    color: #FFF;
+    border-radius: 20px;
+}

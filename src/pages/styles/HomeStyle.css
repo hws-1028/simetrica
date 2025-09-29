@@ -1,0 +1,9 @@
+section {
+    width: 100vw;
+    justify-content: space-between;
+    position: fixed;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    height: 100vh;
+}
