@@ -4,18 +4,37 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: var(--background-overlay);
+    /* MODIFICADO: Transparente por defecto según requerimientos */
+    background: transparent;
     color: var(--text-color);
     z-index: var(--z-header);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Transición suave y profesional */
+    /* MODIFICADO: Transición optimizada para transform y background */
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1), transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px); /* Efecto glassmorphism moderno */
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    will-change: transform, background-color; /* Optimización de performance */
 }
 
-/* Estado del header cuando se hace scroll */
+/* AÑADIDO: Estado visible del header (comportamiento dinámico) */
+.header--visible {
+    transform: translateY(0);
+}
+
+/* AÑADIDO: Estado oculto del header (comportamiento dinámico) */
+.header--hidden {
+    transform: translateY(-110%);
+}
+
+/* MODIFICADO: Estado del header cuando se hace scroll - usar color exacto requerido */
 .header--scrolled {
-    background: rgba(80, 70, 65, 0.95);
+    background: rgba(126, 74, 53, 0.502); /* Color exacto #7E4A3580 como rgba */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* AÑADIDO: Forzar visibilidad en hover incluso si está oculto */
+.header:hover {
+    transform: translateY(0) !important;
+    background: rgba(126, 74, 53, 0.502) !important; /* Color exacto en hover */
 }
 
 /* Contenedor del header con padding responsivo */

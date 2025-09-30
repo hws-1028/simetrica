@@ -2,12 +2,16 @@
 import { useState, useEffect } from 'react';
 import Logo from '../assets/logo-simetrica.png';
 import { Link } from 'react-router-dom';
+import { useNavVisibility } from '../hooks/useNavVisibility'; // AÑADIDO: Hook para comportamiento dinámico
 import "./styles/HeaderStyle.css"
 
 const HeaderLayout = () => {
     // Estado para controlar el menú móvil
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    
+    // AÑADIDO: Hook para controlar visibilidad dinámica del navbar
+    const isNavVisible = useNavVisibility({ offset: 120, threshold: 8 });
 
     // Efecto para detectar scroll y cambiar estilo del header
     useEffect(() => {
@@ -37,8 +41,11 @@ const HeaderLayout = () => {
 
     return (
         <>
-            {/* Header principal con clases dinámicas para scroll */}
-            <header className={`header ${isScrolled ? 'header--scrolled' : ''}`}>
+            {/* MODIFICADO: Header principal con clases dinámicas para scroll y visibilidad */}
+            <header 
+                className={`header ${isScrolled ? 'header--scrolled' : ''} ${isNavVisible ? 'header--visible' : 'header--hidden'}`}
+                aria-hidden={!isNavVisible}
+            >
                 <div className='container header__container'>
                     {/* Logo y nombre de la empresa */}
                     <div className='logo-container'>

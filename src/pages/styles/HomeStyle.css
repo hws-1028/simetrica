@@ -1,10 +1,10 @@
 /* Página principal totalmente responsiva con mejores prácticas */
 
-/* Sección principal con altura completa */
+/* MODIFICADO: Sección principal ajustada para layout con Footer */
 .home-section {
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 60px); /* AJUSTADO: Resta altura aproximada del footer */
     display: flex;
     flex-direction: column;
     justify-content: center;

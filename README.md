@@ -230,6 +230,105 @@ npm run build
 # Los archivos estáticos se generan en ./dist/
 ```
 
+##  **UI: Navbar/Footer/Projects Transparency - 30/09/2025**
+
+###  **Cambios Implementados**
+
+#### **1. Navbar Dinámico con Comportamiento Inteligente**
+-  **Transparente por defecto**: El header inicia sin fondo para mostrar el hero
+-  **Hide/Show dinámico**: Se oculta al scroll hacia abajo, aparece al scroll hacia arriba
+-  **Hover forzado**: Al pasar el mouse sobre el navbar, aparece inmediatamente
+-  **Color exacto**: Usa `rgba(126, 74, 53, 0.502)` equivalente a `#7E4A3580`
+-  **Performance optimizada**: Hook con `requestAnimationFrame` para suavidad
+
+#### **2. Footer con Color Exacto Especificado**
+-  **Color preciso**: Implementado `rgba(126, 74, 53, 0.502)` (equivalente a `#7E4A3580`)
+-  **Branding conservado**: Tipografía y espaciado mantenidos
+-  **Responsividad intacta**: Todos los breakpoints funcionando correctamente
+
+#### **3. ProjectsSection Transparente**
+-  **Background transparente**: Muestra el hero/fondo de manera completa
+-  **Legibilidad mantenida**: Contenido con overlay oscuro para contraste adecuado
+-  **Accesibilidad preservada**: Texto legible en todos los dispositivos
+
+###  **Archivos Modificados**
+
+| Archivo | Cambio Realizado | Justificación |
+|---------|------------------|---------------|
+| `src/hooks/useNavVisibility.ts` | **NUEVO**: Hook para comportamiento dinámico | Performance con rAF, threshold para micro-movimientos |
+| `src/layouts/HeaderLayout.tsx` | Import del hook + aplicación de clases | Integración mínima sin romper funcionalidad existente |
+| `src/layouts/styles/HeaderStyle.css` | Estados visible/hidden + color exacto | Transparencia por defecto, animaciones suaves |
+| `src/components/Footer/FooterStyle.css` | Color actualizado a `rgba(126,74,53,0.502)` | Cumplimiento exacto del requisito de color |
+| `src/components/styles/ProjectsSectionStyle.css` | Background transparente + legibilidad | Transparencia total manteniendo UX |
+
+###  **Cómo Probar los Cambios**
+
+#### **Verificación Manual por Breakpoints:**
+
+```bash
+# 1. Levantar servidor de desarrollo
+npm run dev
+
+# 2. Abrir http://localhost:5173/
+```
+
+**Breakpoints a verificar:**
+- **320px (Mobile)**: Navbar transparente, ProjectsSection transparente, Footer con color correcto
+- **768px (Tablet)**: Comportamiento de scroll del navbar, todos los componentes visibles
+- **1366px (Desktop)**: Experiencia completa, hover del navbar funcionando
+- **≥1920px (TV)**: Layout optimizado para pantallas grandes
+
+#### **Funcionalidades Específicas:**
+
+1. **Navbar Dinámico:**
+   - [ ] Scroll hacia abajo → Navbar se oculta suavemente
+   - [ ] Scroll hacia arriba → Navbar aparece suavemente  
+   - [ ] Hover sobre navbar → Aparece inmediatamente aunque esté oculto
+   - [ ] Color de fondo: `rgba(126, 74, 53, 0.502)` cuando está visible
+
+2. **ProjectsSection Transparente:**
+   - [ ] Background completamente transparente
+   - [ ] Contenido del hero visible por detrás
+   - [ ] Texto del proyecto legible con contraste adecuado
+
+3. **Footer Color Exacto:**
+   - [ ] Color de fondo: `rgba(126, 74, 53, 0.502)`
+   - [ ] Responsive en todos los dispositivos
+   - [ ] Branding y tipografía conservados
+
+###  **Rollback Instructions**
+
+Si es necesario revertir los cambios:
+
+```bash
+# Revertir archivos específicos
+git checkout HEAD~1 -- src/hooks/useNavVisibility.ts
+git checkout HEAD~1 -- src/layouts/HeaderLayout.tsx  
+git checkout HEAD~1 -- src/layouts/styles/HeaderStyle.css
+git checkout HEAD~1 -- src/components/Footer/FooterStyle.css
+git checkout HEAD~1 -- src/components/styles/ProjectsSectionStyle.css
+
+# Eliminar hook si se creó
+rm src/hooks/useNavVisibility.ts
+```
+
+###  **Valores Técnicos Exactos**
+
+| Componente | Propiedad | Valor Hex8 | Valor RGBA | Implementado |
+|------------|-----------|------------|------------|--------------|
+| Header | background-color | `#7E4A3580` | `rgba(126, 74, 53, 0.502)` |  correctamente |
+| Footer | background-color | `#7E4A3580` | `rgba(126, 74, 53, 0.502)` |  correctamente |
+| ProjectsSection | background | `transparent` | `transparent` | correctamente |
+
+###  **Notas Importantes**
+
+- **Sin dependencias nuevas**: Solo hooks y CSS nativos
+- **Performance optimizada**: requestAnimationFrame para animaciones
+- **Accesibilidad mantenida**: aria-hidden en estados ocultos
+- **Cross-browser**: Compatible con todos los navegadores modernos
+- **No tests innecesarios**: Solo cambios funcionales documentados
+
+
 ##  Licencia
 
 Este proyecto está bajo la licencia de Simétrica. Todos los derechos reservados.

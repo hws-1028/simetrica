@@ -2,11 +2,8 @@
 
 .projects-section {
     padding: var(--spacing-xxl) 0;
-    background: linear-gradient(
-        135deg,
-        rgba(32, 32, 32, 0.95) 0%,
-        rgba(80, 70, 65, 0.9) 100%
-    );
+    /* MODIFICADO: Background transparente para mostrar hero/fondo según requerimientos */
+    background: transparent;
     color: var(--text-color);
     position: relative;
     overflow: hidden;
@@ -32,15 +29,16 @@
 
 /* Elemento individual del proyecto */
 .project-item {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
+    /* MODIFICADO: Aumentar contraste para legibilidad sobre fondo transparente */
+    background: rgba(0, 0, 0, 0.75); /* Overlay más oscuro para legibilidad sin cambiar branding */
+    backdrop-filter: blur(15px); /* Mayor blur para mejor definición */
     border-radius: 16px;
     padding: var(--spacing-xxl);
     text-align: center;
     max-width: 600px;
     width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde más visible */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;

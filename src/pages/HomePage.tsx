@@ -1,8 +1,10 @@
 // src/pages/HomePage.tsx
 import { useEffect, useState } from "react";
 import HeaderLayout from "../layouts/HeaderLayout.tsx";
+import Footer from "../components/Footer/Footer.tsx"; // AÑADIDO: Import del componente Footer
 import "./styles/HomeStyle.css"
 import Fondo from "../assets/image-inicio.png"
+import LogoSimetrica from "../assets/logo-simetrica.png" // AÑADIDO: Import del logo para Footer
 
 const Home = () => {
   // Estado para manejar la carga de la imagen de fondo
@@ -14,6 +16,38 @@ const Home = () => {
     img.onload = () => setIsImageLoaded(true);
     img.src = Fondo;
   }, []);
+
+  // AÑADIDO: Configuración de datos para Footer (manteniendo colores y branding existentes)
+  const footerColumns = [
+    {
+      title: "Servicios",
+      links: [
+        { label: "Proyectos", href: "/proyectos" },
+        { label: "Diseños", href: "/diseños" },
+        { label: "Construcción", href: "/construccion" }
+      ]
+    },
+    {
+      title: "Empresa",
+      links: [
+        { label: "Asociados", href: "/asociados" },
+        { label: "Trabaja con nosotros", href: "/trabaja-con-nosotros" },
+        { label: "Contacto", href: "/contacto" }
+      ]
+    },
+    {
+      title: "Legal",
+      links: [
+        { label: "Política de Privacidad", href: "/privacidad" },
+        { label: "Términos de Servicio", href: "/terminos" }
+      ]
+    }
+  ];
+
+  const socialLinks = [
+    { label: "LinkedIn", href: "https://linkedin.com/company/simetrica", external: true },
+    { label: "Instagram", href: "https://instagram.com/simetrica", external: true }
+  ];
 
   return (
     <>
@@ -50,6 +84,16 @@ const Home = () => {
           <div className="scroll-indicator__arrow"></div>
         </div>
       </main>
+
+      {/* AÑADIDO: Footer reutilizable con configuración específica */}
+      <Footer
+        logoSrc={LogoSimetrica}
+        logoAlt="Logo Simétrica - Empresa de diseño y construcción"
+        columns={footerColumns}
+        socialLinks={socialLinks}
+        copyright="© 2025 Simétrica. Todos los derechos reservados."
+        ariaLabel="Pie de página de Simétrica"
+      />
     </>
   );
 };
