@@ -45,6 +45,150 @@ Un sitio web moderno y totalmente responsivo para Simétrica.
 - **CSS Variables** - Theming consistente
 - **CSS Grid & Flexbox** - Layouts responsivos
 
+##  Componentes Reutilizables
+
+### **Button Component**
+
+Un componente de botón completo y versátil que sigue los estándares de diseño del proyecto.
+
+#### **Características del Button:**
+-  **Totalmente Accesible** - WCAG 2.1 AA compliant
+-  **TypeScript** - Tipado completo con IntelliSense
+-  **Responsive** - Adaptativo a todos los breakpoints
+-  **Múltiples variantes** - primary, secondary, ghost
+-  **Diferentes tamaños** - sm, md, lg
+-  **Estados de loading** - Con spinner integrado
+-  **Flexibilidad total** - Acepta todos los props de HTMLButtonElement
+
+#### **Uso Básico:**
+
+```tsx
+import { Button } from '@/components/Button';
+
+// Botón primario básico
+<Button>Hacer clic aquí</Button>
+
+// Botón secundario con tamaño grande
+<Button variant="secondary" size="lg">
+  Botón Secundario
+</Button>
+
+// Botón ghost con estado de loading
+<Button variant="ghost" loading>
+  Procesando...
+</Button>
+
+// Botón con evento personalizado
+<Button 
+  variant="primary" 
+  onClick={() => console.log('Clicked!')}
+  disabled={false}
+>
+  Enviar Formulario
+</Button>
+```
+
+#### **Props Interface:**
+
+```tsx
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  loading?: boolean;
+  children: ReactNode;
+}
+```
+
+#### **Ejemplos Avanzados:**
+
+```tsx
+// Botón con ref forwarding
+const buttonRef = useRef<HTMLButtonElement>(null);
+<Button ref={buttonRef} variant="primary">
+  Botón con Ref
+</Button>
+
+// Botón con className personalizada
+<Button 
+  variant="secondary" 
+  className="mi-estilo-personalizado"
+>
+  Botón Customizado
+</Button>
+
+// Botón como submit en formulario
+<Button 
+  type="submit" 
+  variant="primary" 
+  size="lg"
+  loading={isSubmitting}
+>
+  {isSubmitting ? 'Enviando...' : 'Enviar'}
+</Button>
+
+// Botón con icono (usando children)
+<Button variant="ghost" size="sm">
+  <IconDownload /> Descargar
+</Button>
+```
+
+#### **Variantes de Estilo:**
+
+- **Primary**: Botón principal con color primario del brand (#7E4A35)
+- **Secondary**: Botón secundario con outline y hover effects
+- **Ghost**: Botón transparente para acciones secundarias
+
+#### **Tamaños Disponibles:**
+
+- **sm**: 12px padding, ideal para acciones menores
+- **md**: 16px padding, tamaño estándar recomendado  
+- **lg**: 24px padding, para CTAs principales
+
+### **Footer Component**
+
+Un componente de pie de página completo con diseño responsivo y accesibilidad total.
+
+#### **Características del Footer:**
+-  **Totalmente Responsivo** - Adaptativo a todos los dispositivos
+-  **Accesibilidad WCAG 2.1** - Navigation landmarks y screen reader friendly
+-  **Diseño Glassmorphism** - Efecto de cristal con backdrop-filter
+-  **TypeScript** - Tipado completo con interfaces
+-  **Flexible** - Acepta props personalizadas y className
+
+#### **Uso Básico:**
+
+```tsx
+import { Footer } from '@/components/Footer';
+
+// Footer básico
+<Footer />
+
+// Footer con className personalizada
+<Footer className="mi-footer-custom" />
+
+// Footer con props adicionales
+<Footer 
+  id="main-footer"
+  role="contentinfo"
+/>
+```
+
+#### **Props Interface:**
+
+```tsx
+interface FooterProps extends HTMLAttributes<HTMLElement> {
+  children?: ReactNode;
+}
+```
+
+#### **Características del Diseño:**
+
+- **Color de fondo**: rgba(126, 74, 53, 0.502) - Marrón translúcido
+- **Backdrop filter**: Efecto glassmorphism profesional
+- **Responsive**: Layout de columnas en desktop, apilado en móvil
+- **Navegación semántica**: Elemento `<nav>` con `aria-label`
+- **Links sociales**: Preparado para iconos de redes sociales
+
 ##  Breakpoints Responsivos
 
 ```css
@@ -328,6 +472,76 @@ rm src/hooks/useNavVisibility.ts
 - **Cross-browser**: Compatible con todos los navegadores modernos
 - **No tests innecesarios**: Solo cambios funcionales documentados
 
+##  Instalación y Desarrollo
+
+### **Prerrequisitos**
+- Node.js 18+ (recomendado: 20+)
+- npm 9+ o yarn 1.22+
+- Git
+
+### **Instalación**
+
+```bash
+# Clonar el repositorio
+git clone <repository-url>
+cd simetrica
+
+# Instalar dependencias
+npm install
+
+# Iniciar servidor de desarrollo
+npm run dev
+```
+
+### **Scripts Disponibles**
+
+```bash
+# Desarrollo - Servidor local con hot reload
+npm run dev
+
+# Producción - Build optimizado
+npm run build
+
+# Preview - Previsualizar build de producción
+npm run preview
+
+# Linting - Verificar código
+npm run lint
+
+# Type checking - Verificar tipos TypeScript
+npm run typecheck
+```
+
+### **Estructura de Archivos**
+
+```
+src/
+├── components/          # Componentes reutilizables
+│   ├── Button/         # Componente Button
+│   └── Footer/         # Componente Footer
+├── layouts/            # Layouts de página
+├── pages/              # Páginas principales
+├── hooks/              # Custom hooks
+├── assets/             # Recursos estáticos
+└── styles/             # Estilos globales
+```
+
+### **Desarrollo Local**
+
+1. **Servidor de desarrollo**: Ejecuta en `http://localhost:5173`
+2. **Hot Reload**: Cambios automáticos en tiempo real
+3. **TypeScript**: Verificación de tipos en tiempo de desarrollo
+4. **ESLint**: Linting automático en desarrollo
+
+### **Build de Producción**
+
+```bash
+# Generar build optimizado
+npm run build
+
+# Los archivos se generan en /dist/
+# Listo para deploy en cualquier servidor estático
+```
 
 ##  Licencia
 

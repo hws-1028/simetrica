@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import HeaderLayout from "../layouts/HeaderLayout.tsx";
 import Footer from "../components/Footer/Footer.tsx"; // AÑADIDO: Import del componente Footer
+import Button from "../components/Button"; // AÑADIDO: Import del componente Button
 import "./styles/HomeStyle.css"
 import Fondo from "../assets/image-inicio.png"
 import LogoSimetrica from "../assets/logo-simetrica.png" // AÑADIDO: Import del logo para Footer
@@ -72,9 +73,41 @@ const Home = () => {
         {/* Contenido principal de la página */}
         <div className="home-section__content">
           <div className="container">
-            {/* Aquí se puede agregar contenido futuro como hero section, etc. */}
-            <div className="hero-placeholder">
-              {/* Contenido hero se agregará aquí en futuras iteraciones */}
+            {/* Hero section con botones demostrativos */}
+            <div className="hero-content">
+              <h1 className="hero-content__title">
+                Bienvenido a Simétrica
+              </h1>
+              <p className="hero-content__subtitle">
+                Diseños únicos y construcción profesional
+              </p>
+              
+              {/* Demostración de componentes Button */}
+              <div className="hero-content__actions">
+                <Button 
+                  variant="primary" 
+                  size="lg"
+                  onClick={() => console.log('Ver proyectos clicked!')}
+                >
+                  Ver Proyectos
+                </Button>
+                
+                <Button 
+                  variant="secondary" 
+                  size="lg"
+                  onClick={() => console.log('Contactar clicked!')}
+                >
+                  Contactar
+                </Button>
+                
+                <Button 
+                  variant="ghost" 
+                  size="md"
+                  onClick={() => console.log('Más info clicked!')}
+                >
+                  Más Información
+                </Button>
+              </div>
             </div>
           </div>
         </div>

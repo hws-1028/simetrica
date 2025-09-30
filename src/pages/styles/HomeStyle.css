@@ -257,3 +257,90 @@
         );
     }
 }
+
+/* =================================
+   HERO CONTENT STYLES
+   ================================= */
+
+/* Contenedor principal del hero */
+.hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: var(--text-color);
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+}
+
+/* Título principal */
+.hero-content__title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtítulo */
+.hero-content__subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.4;
+    opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor de botones */
+.hero-content__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Responsive para hero content */
+@media screen and (max-width: 767px) {
+    .hero-content {
+        padding: var(--spacing-lg);
+    }
+    
+    .hero-content__title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content__subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .hero-content__actions {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .hero-content__title {
+        font-size: 3rem;
+    }
+    
+    .hero-content__subtitle {
+        font-size: 1.3rem;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .hero-content__title {
+        font-size: 4rem;
+    }
+    
+    .hero-content__subtitle {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content {
+        max-width: 1000px;
+    }
+}
