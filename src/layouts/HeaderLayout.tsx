@@ -1,24 +1,102 @@
 // src/layouts/HeaderLayout.tsx
+import { useState, useEffect } from 'react';
 import Logo from '../assets/logo-simetrica.png';
 import { Link } from 'react-router-dom';
 import "./styles/HeaderStyle.css"
 
 const HeaderLayout = () => {
+    // Estado para controlar el menú móvil
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    // Efecto para detectar scroll y cambiar estilo del header
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            setIsScrolled(scrollTop > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Función para alternar el menú móvil
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    // Función para cerrar el menú móvil al hacer click en un enlace
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+    };
+
+    // Función para manejar el click fuera del menú
+    const handleOverlayClick = () => {
+        setIsMobileMenuOpen(false);
+    };
+
     return (
         <>
-          <div className='logo-container'>
-            <img src={Logo} alt="Logo Simetrica" />
-            <h1>SIMÉTRICA</h1>
-          </div>
+            {/* Header principal con clases dinámicas para scroll */}
+            <header className={`header ${isScrolled ? 'header--scrolled' : ''}`}>
+                <div className='container header__container'>
+                    {/* Logo y nombre de la empresa */}
+                    <div className='logo-container'>
+                        <img 
+                            src={Logo} 
+                            alt="Logo Simétrica - Empresa de diseño y construcción" 
+                            className="logo-container__image"
+                        />
+                        <h1 className="logo-container__title">SIMÉTRICA</h1>
+                    </div>
 
-          <nav className='nav-container'>
-            <Link to="/">Inicio</Link>
-            <Link to="/asociados">Asociados</Link>
-            <Link to="/proyectos">Proyectos</Link>
-            <Link to="/diseños">Diseños</Link>
-            <Link to="/trabaja-con-nosotros">Trabaja con nosotros</Link>
-            <Link className='link' to="/contacto">Contacto</Link>
-          </nav>
+                    {/* Navegación desktop */}
+                    <nav className='nav-container nav-container--desktop' aria-label="Navegación principal">
+                        <Link to="/" className="nav-container__link">Inicio</Link>
+                        <Link to="/asociados" className="nav-container__link">Asociados</Link>
+                        <Link to="/proyectos" className="nav-container__link">Proyectos</Link>
+                        <Link to="/diseños" className="nav-container__link">Diseños</Link>
+                        <Link to="/trabaja-con-nosotros" className="nav-container__link">Trabaja con nosotros</Link>
+                        <Link className='nav-container__link nav-container__link--cta' to="/contacto">Contacto</Link>
+                    </nav>
+
+                    {/* Botón hamburguesa para móvil */}
+                    <button 
+                        className={`mobile-menu-toggle ${isMobileMenuOpen ? 'mobile-menu-toggle--open' : ''}`}
+                        onClick={toggleMobileMenu}
+                        aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+                        aria-expanded={isMobileMenuOpen}
+                        aria-controls="mobile-nav"
+                    >
+                        <span className="mobile-menu-toggle__line"></span>
+                        <span className="mobile-menu-toggle__line"></span>
+                        <span className="mobile-menu-toggle__line"></span>
+                    </button>
+                </div>
+            </header>
+
+            {/* Overlay para cerrar menú móvil */}
+            {isMobileMenuOpen && (
+                <div 
+                    className="mobile-menu-overlay" 
+                    onClick={handleOverlayClick}
+                    aria-hidden="true"
+                ></div>
+            )}
+
+            {/* Navegación móvil */}
+            <nav 
+                id="mobile-nav"
+                className={`nav-container nav-container--mobile ${isMobileMenuOpen ? 'nav-container--mobile-open' : ''}`}
+                aria-label="Navegación móvil"
+            >
+                <Link to="/" className="nav-container__link" onClick={closeMobileMenu}>Inicio</Link>
+                <Link to="/asociados" className="nav-container__link" onClick={closeMobileMenu}>Asociados</Link>
+                <Link to="/proyectos" className="nav-container__link" onClick={closeMobileMenu}>Proyectos</Link>
+                <Link to="/diseños" className="nav-container__link" onClick={closeMobileMenu}>Diseños</Link>
+                <Link to="/trabaja-con-nosotros" className="nav-container__link" onClick={closeMobileMenu}>Trabaja con nosotros</Link>
+                <Link className='nav-container__link nav-container__link--cta' to="/contacto" onClick={closeMobileMenu}>Contacto</Link>
+            </nav>
         </>
     )
 }
