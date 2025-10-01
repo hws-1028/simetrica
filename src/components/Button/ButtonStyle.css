@@ -28,8 +28,8 @@
   will-change: transform, box-shadow, background-color;
   
   /* Propiedades base de espaciado */
-  padding: var(--spacing-md) var(--spacing-lg);
-  min-height: 44px; /* Mínimo para accesibilidad táctil */
+  padding: var(--spacing-sm) var(--spacing-md);
+  min-height: 36px; /* Mínimo para accesibilidad táctil */
   
   /* Estado inicial */
   position: relative;
