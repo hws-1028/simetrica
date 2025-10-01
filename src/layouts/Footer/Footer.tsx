@@ -1,4 +1,5 @@
-// src/components/Footer/Footer.tsx
+/* MOVED: src/components/Footer -> src/layouts/Footer — motivo: reorganización de layout - Fecha: 2025-10-01 */
+// src/layouts/Footer/Footer.tsx
 import React from 'react';
 import './FooterStyle.css';
 

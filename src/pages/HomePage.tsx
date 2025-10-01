@@ -1,7 +1,7 @@
 // src/pages/HomePage.tsx
 import { useEffect, useState } from "react";
 import HeaderLayout from "../layouts/HeaderLayout.tsx";
-import Footer from "../components/Footer/Footer.tsx"; // AÑADIDO: Import del componente Footer
+import Footer from "../layouts/Footer/Footer.tsx"; // ACTUALIZADO: Import actualizado después de reorganización Footer -> layouts - 2025-10-01
 import Button from "../components/Button"; // AÑADIDO: Import del componente Button
 import "./styles/HomeStyle.css"
 import Fondo from "../assets/image-inicio.png"

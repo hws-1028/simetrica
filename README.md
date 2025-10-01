@@ -158,7 +158,8 @@ Un componente de pie de página completo con diseño responsivo y accesibilidad 
 #### **Uso Básico:**
 
 ```tsx
-import { Footer } from '@/components/Footer';
+// NUEVO IMPORT después de reorganización (2025-10-01)
+import Footer from '@/layouts/Footer';
 
 // Footer básico
 <Footer />
@@ -512,18 +513,73 @@ npm run lint
 npm run typecheck
 ```
 
-### **Estructura de Archivos**
+### **Estructura de Archivos (ACTUALIZADA 2025-10-01)**
 
 ```
 src/
 ├── components/          # Componentes reutilizables
 │   ├── Button/         # Componente Button
-│   └── Footer/         # Componente Footer
-├── layouts/            # Layouts de página
+│   └── ProjectsSectionComponents.tsx
+├── layouts/            # Layouts y componentes de página
+│   ├── HeaderLayout.tsx
+│   └── Footer/         # 🔄 MOVIDO desde components/ - Layout Footer
 ├── pages/              # Páginas principales
 ├── hooks/              # Custom hooks
 ├── assets/             # Recursos estáticos
 └── styles/             # Estilos globales
+```
+
+## 🔄 **Reestructuración: Footer → layouts**
+
+### **Cambios Realizados (2025-10-01)**
+
+**Reorganización del componente Footer:** Se movió de `src/components/Footer` a `src/layouts/Footer` para reflejar mejor su función como elemento de layout en lugar de componente reutilizable general.
+
+### **Archivos Movidos:**
+-  `src/components/Footer/Footer.tsx` → `src/layouts/Footer/Footer.tsx`
+-  `src/components/Footer/FooterStyle.css` → `src/layouts/Footer/FooterStyle.css`
+-  `src/components/Footer/index.ts` → `src/layouts/Footer/index.ts`
+
+### **Imports Actualizados:**
+-  **Antes:** `import Footer from '../components/Footer/Footer.tsx';`
+-  **Ahora:** `import Footer from '../layouts/Footer/Footer.tsx';`
+
+### **Verificación de la Reorganización:**
+
+1. **Compilación exitosa:**
+   ```bash
+   npm run build
+   #  Debe compilar sin errores
+   ```
+
+2. **Linting sin errores:**
+   ```bash
+   npm run lint
+   #  Sin warnings ni errores
+   ```
+
+3. **Desarrollo funcional:**
+   ```bash
+   npm run dev
+   #  Servidor debe iniciar correctamente
+   #  Footer debe aparecer visualmente en las páginas
+   ```
+
+### **Rollback (Si es necesario):**
+
+```bash
+# Crear carpeta original
+mkdir -p src/components/Footer
+
+# Copiar archivos de vuelta
+cp -r src/layouts/Footer/* src/components/Footer/
+
+# Actualizar imports en HomePage.tsx
+# Cambiar: import Footer from "../layouts/Footer/Footer.tsx";
+# Por:     import Footer from "../components/Footer/Footer.tsx";
+
+# Eliminar carpeta nueva
+rm -rf src/layouts/Footer
 ```
 
 ### **Desarrollo Local**
