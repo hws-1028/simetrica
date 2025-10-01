@@ -1,3 +1,18 @@
+# 01/10/2025 - Cambios en ProjectsSection: Texto sobre la primera imagen
+
+## Cambios realizados
+
+- Se modificó el layout de la sección de proyectos para que la descripción (texto) aparezca sobre la primera imagen, en vez de estar a la izquierda.
+- Se cambió `.projects-section__grid` de `display: grid` a `display: flex` y se posicionó el texto de forma absoluta sobre la primera imagen.
+- Se añadió fondo semitransparente y padding al texto para mejorar la legibilidad.
+- Se ajustó la estructura de las imágenes para que el texto no tape las demás imágenes.
+- Se eliminaron reglas CSS duplicadas y se mejoró la organización de la hoja de estilos.
+
+## Justificación
+
+Este cambio mejora el impacto visual y la jerarquía de la sección de proyectos, haciendo que la descripción destaque directamente sobre la imagen principal, siguiendo tendencias modernas de diseño web.
+
+---
 # Simétrica - Sitio Web Responsivo
 
 Un sitio web moderno y totalmente responsivo para Simétrica.

@@ -4,15 +4,28 @@
   color: #fff;
 }
 
+
+/* Cambiado a flex para superponer el texto sobre la primera imagen */
 .projects-section__grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr; /* texto 1 parte, imágenes 2 */
+  display: flex;
   gap: 2rem;
-  align-items: center;
+  align-items: stretch;
+  position: relative;
 }
 
+
+/* El texto ahora es absoluto sobre la primera imagen */
 .projects-section__text {
-  max-width: 400px;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  z-index: 2;
+  background: rgba(32,32,32,0.7);
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  max-width: 340px;
+  color: #fff;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.18);
 }
 
 .projects-section__title {
@@ -27,30 +40,40 @@
   color: #ccc;
 }
 
+
 .projects-section__images {
   display: flex;
   gap: 1.5rem;
+  width: 100%;
+}
+
+
+.projects-section__image-card {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
 }
 
 .projects-section__image-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(70%); /* oscurece la imagen */
+  filter: brightness(70%);
   transition: filter 0.3s ease;
   border: 2px solid #7E4A35;
 }
 
+
 .projects-section__image-card:hover img {
-  filter: brightness(100%); /* vuelve clara al hacer hover */
+  filter: brightness(100%);
 }
+
 
 .projects-section__image-card:hover {
   transform: translateY(-8px);
 }
 
-.projects-section__image-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+
+/* Eliminado duplicado */
