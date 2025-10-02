@@ -7,6 +7,7 @@ import Button from "../components/Button"; // AÑADIDO: Import del componente Bu
 import "./styles/HomeStyle.css"
 import Fondo from "../assets/image-inicio.png"
 import LogoSimetrica from "../assets/logo-simetrica.png" // AÑADIDO: Import del logo para Footer
+import ProjectsSectionComponents from "../components/ProjectsSectionComponents.tsx";
 
 const Home = () => {
   // Estado para manejar la carga de la imagen de fondo
@@ -114,8 +115,22 @@ const Home = () => {
         </div>
 
         {/* Indicador de scroll para UX mejorada */}
-        <div className="scroll-indicator" aria-hidden="true">
+        <div 
+          className="scroll-indicator" 
+          aria-hidden="true"
+          onClick={() => {
+            const projectsSection = document.getElementById('sections-projects');
+            if (projectsSection) {
+              projectsSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}>
           <div className="scroll-indicator__arrow"></div>
+
+        </div>
+      </main>
+      <main className="home-sections-projects" id="sections-projects">
+        <div>
+          <ProjectsSectionComponents />
         </div>
       </main>
 

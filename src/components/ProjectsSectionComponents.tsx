@@ -2,6 +2,12 @@
 // src/components/ProjectsSectionComponents.tsx
 import { useState, useEffect } from 'react';
 import './styles/ProjectsSectionStyle.css';
+import Button from './Button';
+
+// Imágenes de proyectos
+import Img1 from "../assets/project1.png";
+import Img2 from "../assets/project2.png";
+import Img3 from "../assets/project3.png";
 
 const ProjectsSectionComponents = () => {
     // Estado para animaciones de entrada
@@ -34,32 +40,33 @@ const ProjectsSectionComponents = () => {
 
     return (
         <section className={`projects-section ${isVisible ? 'projects-section--visible' : ''}`}>
-            <div className="container">
-                <div className="projects-section__content">
-                    {/* Contenedor del proyecto con mejores prácticas de accesibilidad */}
-                    <article className="project-item">
-                        <header className="project-item__header">
-                            <h2 className="project-item__title">Nuestros proyectos</h2>
-                        </header>
-                        
-                        <div className="project-item__content">
-                            <p className="project-item__description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur 
-                                euismod tellus sed lacus tincidunt lacinia sed sit amet odio. Etiam 
-                                vitae bibendum elit.
-                            </p>
-                        </div>
+            <div className="container projects-section__grid">
+                {/* Texto a la izquierda */}
+                <div className="projects-section__text">
+                    <h2 className="projects-section__title">Nuestros proyectos</h2>
+                    <p className="projects-section__description">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur 
+                        euismod tellus sed lacus tincidunt lacinia sed sit amet odio. Etiam 
+                        vitae bibendum elit.
+                    </p>
+                    <Button 
+                        variant='primary'
+                        size="lg"
+                        onClick={() => console.log('Ver mas clicked!')}
+                    >Ver más</Button>
+                </div>
 
-                        {/* Call to action para mejor UX */}
-                        <footer className="project-item__footer">
-                            <button 
-                                className="project-item__cta"
-                                aria-label="Ver todos nuestros proyectos"
-                            >
-                                Ver proyectos
-                            </button>
-                        </footer>
-                    </article>
+                {/* Imagenes a la derecha */}
+                <div className="projects-section__images">
+                    <div className="projects-section__image-card">
+                        <img src={Img1} alt="Proyecto en construcción 1" />
+                    </div>
+                    <div className="projects-section__image-card">
+                        <img src={Img2} alt="Proyecto en construcción 2" />
+                    </div>
+                    <div className="projects-section__image-card">
+                        <img src={Img3} alt="Proyecto en construcción 3" />
+                    </div>
                 </div>
             </div>
         </section>
