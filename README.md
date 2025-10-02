@@ -190,6 +190,80 @@ interface FooterProps extends HTMLAttributes<HTMLElement> {
 - **Navegación semántica**: Elemento `<nav>` con `aria-label`
 - **Links sociales**: Preparado para iconos de redes sociales
 
+### **ContactForm Component (NUEVO 2025-10-01)**
+
+Un formulario de contacto completo, accesible y con validación del lado del cliente.
+
+#### **Características del ContactForm:**
+- ✅ **Totalmente Accesible** - WCAG 2.1 AA compliant con ARIA labels
+- ✅ **Validación sin dependencias** - Email regex, campos requeridos, longitudes
+- ✅ **Estados de envío** - idle, sending, success, error con feedback visual
+- ✅ **Anti-spam** - Campo honeypot invisible para bots
+- ✅ **TypeScript completo** - Interfaces tipadas y props flexibles
+- ✅ **Responsive** - Mobile-first, grid adaptativo
+- ✅ **Integración lista** - Stub preparado para backend real
+
+#### **Uso Básico:**
+
+```tsx
+import ContactForm from '@/components/ContactForm';
+
+// Formulario básico
+<ContactForm />
+
+// Con callbacks personalizados
+<ContactForm 
+  onSuccess={() => console.log('¡Enviado!')}
+  onError={(error) => console.error('Error:', error)}
+  className="mi-formulario-custom"
+/>
+
+// Con valores iniciales
+<ContactForm 
+  initialValues={{
+    name: 'Juan Pérez',
+    email: 'juan@ejemplo.com'
+  }}
+/>
+```
+
+#### **Props Interface:**
+
+```tsx
+interface ContactFormProps {
+  initialValues?: Partial<ContactFormData>;
+  onSuccess?: () => void;
+  onError?: (error: Error) => void;
+  className?: string;
+  ariaLabel?: string;
+}
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  subject?: string;
+  phone?: string;
+  message: string;
+  honeypot?: string; // Campo anti-spam
+}
+```
+
+#### **Integración Backend:**
+
+El servicio `src/services/contactService.ts` está preparado para integrarse con `POST /api/contact`:
+
+```tsx
+// Simulación en desarrollo - cambiar en producción
+export async function sendContact(data: ContactFormData) {
+  const response = await fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  // Manejo de errores HTTP incluido
+}
+```
+
 ##  Breakpoints Responsivos
 
 ```css
@@ -519,17 +593,121 @@ npm run typecheck
 src/
 ├── components/          # Componentes reutilizables
 │   ├── Button/         # Componente Button
+│   ├── ContactForm/    # NUEVO: Formulario de contacto - 2025-10-01
 │   └── ProjectsSectionComponents.tsx
 ├── layouts/            # Layouts y componentes de página
 │   ├── HeaderLayout.tsx
-│   └── Footer/         # 🔄 MOVIDO desde components/ - Layout Footer
+│   └── Footer/         # MOVIDO desde components/ - Layout Footer
 ├── pages/              # Páginas principales
+├── services/           # NUEVO: Servicios de API - 2025-10-01
 ├── hooks/              # Custom hooks
 ├── assets/             # Recursos estáticos
 └── styles/             # Estilos globales
 ```
 
-## 🔄 **Reestructuración: Footer → layouts**
+##  **UI: Contact Form (NUEVO 2025-10-01)**
+
+### **Implementación Completada**
+
+Se añadió un formulario de contacto completo siguiendo las mejores prácticas de React + TypeScript.
+
+### **Archivos Añadidos/Creados:**
+-  `src/components/ContactForm/ContactForm.tsx` - Componente principal
+-  `src/components/ContactForm/ContactFormStyle.css` - Estilos responsive
+-  `src/components/ContactForm/index.ts` - Exportación centralizada
+-  `src/services/contactService.ts` - Servicio de envío (stub para backend)
+-  `src/pages/ContactPage.tsx` - Página de ejemplo funcional
+-  `src/pages/styles/ContactPageStyle.css` - Estilos de página
+
+### **Características Implementadas:**
+- **Validación client-side**: Nombre, email, mensaje (requeridos), teléfono (opcional)
+- **Estados del formulario**: idle → sending → success/error con feedback visual
+- **Anti-spam básico**: Campo honeypot invisible para bots
+- **Accesibilidad WCAG 2.1**: ARIA labels, roles, navegación por teclado
+- **Responsive design**: Mobile-first, grid adaptativo hasta 4K
+- **TypeScript completo**: Interfaces tipadas, props flexibles
+- **Sin dependencias**: Validación con regex nativo, sin librerías externas
+
+### **Integración Backend:**
+
+El endpoint sugerido es `POST /api/contact` con el siguiente contrato:
+
+```json
+{
+  "name": "string",
+  "email": "string", 
+  "subject": "string?",
+  "phone": "string?",
+  "message": "string",
+  "timestamp": "ISO string",
+  "userAgent": "string"
+}
+```
+
+**Respuestas esperadas:**
+- `200`: `{ "success": true, "message": "..." }`
+- `400/422`: Datos inválidos
+- `429`: Rate limiting
+- `500`: Error servidor
+
+### **Cómo Probar:**
+
+1. **Servidor de desarrollo:**
+   ```bash
+   npm run dev
+   # Navegar a http://localhost:5173/ y ver el import comentado en HomePage
+   ```
+
+2. **Página de ejemplo completa:**
+   ```tsx
+   // Descomentar en src/pages/HomePage.tsx:
+   import ContactForm from "../components/ContactForm";
+   
+   // O crear ruta a ContactPage.tsx
+   ```
+
+3. **Validaciones a probar:**
+   -  Campos vacíos (nombre, email, mensaje)
+   -  Email inválido (`test`, `@ejemplo.com`)
+   -  Mensaje muy corto (< 10 caracteres)  
+   -  Teléfono inválido si se proporciona (< 6 caracteres)
+   -  Envío exitoso (simulado en desarrollo)
+
+4. **Accesibilidad a probar:**
+   -  Navegación por teclado (Tab, Shift+Tab, Enter)
+   -  Screen reader (mensajes de error leídos correctamente)
+   -  High contrast mode
+   -  Responsive (320px - 4K)
+
+### **Rollback (Si es necesario):**
+
+```bash
+# Eliminar archivos añadidos
+rm -rf src/components/ContactForm
+rm -rf src/services
+rm src/pages/ContactPage.tsx
+rm src/pages/styles/ContactPageStyle.css
+
+# Revertir cambio en HomePage.tsx
+git checkout HEAD -- src/pages/HomePage.tsx
+
+# Revertir README.md
+git checkout HEAD -- README.md
+```
+
+### **Notas Importantes:**
+
+- **Sin dependencias nuevas**: Solo React hooks nativos y fetch API
+- **Stub de desarrollo**: `contactService.ts` simula envío en localhost
+- **Producción lista**: Cambiar `isDevelopment` check por endpoint real
+- **Sin tests temporales**: Archivos limpios, sin pruebas residuales
+- **Convenciones mantenidas**: CSS regular (no modules), variables globales, BEM
+├── hooks/              # Custom hooks
+├── assets/             # Recursos estáticos
+└── styles/             # Estilos globales
+```
+
+##  **Reestructuración: Footer → layouts**
 
 ### **Cambios Realizados (2025-10-01)**
 

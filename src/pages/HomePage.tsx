@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import HeaderLayout from "../layouts/HeaderLayout.tsx";
 import Footer from "../layouts/Footer/Footer.tsx"; // ACTUALIZADO: Import actualizado después de reorganización Footer -> layouts - 2025-10-01
 import Button from "../components/Button"; // AÑADIDO: Import del componente Button
+// import ContactForm from "../components/ContactForm"; // DISPONIBLE: Formulario de contacto listo para usar - 2025-10-01
 import "./styles/HomeStyle.css"
 import Fondo from "../assets/image-inicio.png"
 import LogoSimetrica from "../assets/logo-simetrica.png" // AÑADIDO: Import del logo para Footer

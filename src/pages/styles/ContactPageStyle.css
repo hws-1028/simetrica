@@ -1,0 +1,243 @@
+/* ARCHIVO AÑADIDO: ContactPage styles - 2025-10-01 */
+/* ContactPageStyle.css - Estilos para página de contacto siguiendo convenciones del proyecto */
+
+/* Página de contacto principal */
+.contact-page {
+  min-height: 100vh;
+  position: relative;
+  padding-top: 80px; /* Espacio para header fijo */
+  
+  /* Background con gradiente similar al proyecto */
+  background: linear-gradient(
+    135deg,
+    var(--background-dark) 0%,
+    var(--secondary-color) 50%,
+    var(--primary-color) 100%
+  );
+}
+
+/* Container principal */
+.contact-page__container {
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* Hero section */
+.contact-page__hero {
+  padding: var(--spacing-xxl) 0;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.contact-page__title {
+  font-size: 3rem;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-lg);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.contact-page__subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Sección del formulario */
+.contact-page__form-section {
+  padding: var(--spacing-xxl) 0;
+  position: relative;
+}
+
+.contact-page__form-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.contact-page__form-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xxl);
+  color: var(--text-color);
+}
+
+.contact-page__form-title {
+  font-size: 2rem;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+}
+
+.contact-page__form-description {
+  font-size: 1rem;
+  opacity: 0.8;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Formulario personalizado para esta página */
+.contact-page__form {
+  /* El formulario ya tiene sus propios estilos, aquí solo ajustes específicos */
+  margin: 0 auto;
+}
+
+/* Información de contacto adicional */
+.contact-page__info {
+  padding: var(--spacing-xxl) 0;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.contact-page__info-grid {
+  display: grid;
+  gap: var(--spacing-xl);
+  grid-template-columns: 1fr;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact-page__info-item {
+  text-align: center;
+  color: var(--text-color);
+}
+
+.contact-page__info-title {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-md);
+  color: var(--primary-color);
+}
+
+.contact-page__info-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.contact-page__info-link {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-page__info-link:hover,
+.contact-page__info-link:focus {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* Container global (reutilizado del proyecto) */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+/* BREAKPOINTS RESPONSIVOS */
+
+/* Mobile devices (320px - 767px) */
+@media screen and (max-width: 767px) {
+  .contact-page {
+    padding-top: 60px;
+  }
+  
+  .contact-page__hero {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .contact-page__title {
+    font-size: 2rem;
+  }
+  
+  .contact-page__subtitle {
+    font-size: 1rem;
+  }
+  
+  .contact-page__form-section {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .contact-page__form-title {
+    font-size: 1.5rem;
+  }
+  
+  .contact-page__info {
+    padding: var(--spacing-xl) 0;
+  }
+  
+  .container {
+    padding: 0 var(--spacing-md);
+  }
+}
+
+/* Tablet devices (768px - 1023px) */
+@media screen and (min-width: 768px) {
+  .contact-page__info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop devices (1024px - 1919px) */
+@media screen and (min-width: 1024px) {
+  .contact-page__title {
+    font-size: 3.5rem;
+  }
+  
+  .contact-page__subtitle {
+    font-size: 1.3rem;
+  }
+  
+  .contact-page__form-title {
+    font-size: 2.5rem;
+  }
+  
+  .contact-page__info-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* TV and ultra-wide screens (1920px+) */
+@media screen and (min-width: 1920px) {
+  .contact-page__title {
+    font-size: 4rem;
+  }
+  
+  .contact-page__subtitle {
+    font-size: 1.5rem;
+  }
+  
+  .contact-page__form-title {
+    font-size: 3rem;
+  }
+  
+  .contact-page__info-title {
+    font-size: 1.5rem;
+  }
+  
+  .contact-page__info-text {
+    font-size: 1.1rem;
+  }
+}
+
+/* MEJORAS DE ACCESIBILIDAD */
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .contact-page {
+    background: var(--background-dark);
+  }
+  
+  .contact-page__info {
+    background: rgba(0, 0, 0, 0.8);
+    border-top: 3px solid var(--text-color);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .contact-page__info-link {
+    transition: none;
+  }
+}
