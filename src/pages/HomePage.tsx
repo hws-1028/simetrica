@@ -8,6 +8,7 @@ import "./styles/HomeStyle.css"
 import Fondo from "../assets/image-inicio.png"
 import LogoSimetrica from "../assets/logo-simetrica.png" // AÑADIDO: Import del logo para Footer
 import ProjectsSectionComponents from "../components/ProjectsSectionComponents.tsx";
+import SimetricaSectionComponents from "../components/SimetricaSectionComponents.tsx";
 
 const Home = () => {
   // Estado para manejar la carga de la imagen de fondo
@@ -132,6 +133,9 @@ const Home = () => {
         <div>
           <ProjectsSectionComponents />
         </div>
+      </main>
+      <main className="home-section-simetrica">
+        <SimetricaSectionComponents />
       </main>
 
       {/* AÑADIDO: Footer reutilizable con configuración específica */}
