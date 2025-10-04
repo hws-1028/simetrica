@@ -1,3 +1,63 @@
+# 01/10/2025 - Ajuste de tamaños del componente Button
+
+## Cambios realizados
+
+**ACTUALIZACIÓN DEL COMPONENTE BUTTON**: Se ajustaron los tamaños del componente Button para mejorar la consistencia visual y usabilidad, siguiendo las especificaciones del usuario.
+
+### Modificaciones en ButtonStyle.css:
+
+1. **Tamaños estandarizados con cálculos precisos:**
+   - **sm**: padding ~0.4rem × 0.75rem, font-size 0.875rem (14px), min-height 36px
+   - **md**: padding ~0.6rem × 1rem, font-size 1rem (16px), min-height 44px
+   - **lg**: padding ~0.9rem × 1.75rem, font-size 1.125rem (18px), min-height 52px
+
+2. **Eliminación de clamp() dinámicos**: 
+   - Se reemplazaron `clamp()` por tamaños fijos para mayor consistencia
+   - Font-size base del `.button` cambiado de `clamp(0.875rem, 1.2vw, 1rem)` a `1rem` fijo
+
+3. **Responsive breakpoints actualizados:**
+   - Mobile (≤767px): Tamaños ligeramente reducidos para pantallas pequeñas
+   - Tablet (768-1023px): Sin cambios, tamaños base óptimos
+   - Desktop large (≥1440px): Ajuste sutil en `.button--lg`
+   - Ultra-wide (≥1920px): Incrementos proporcionales para pantallas grandes
+
+4. **Uso de variables CSS del sistema:**
+   - Todos los cálculos usan `--spacing-*` (xs: 0.25rem, sm: 0.5rem, md: 1rem, lg: 1.5rem, xl: 2rem)
+   - Cálculos con `calc()` para valores intermedios precisos
+
+### Archivos modificados:
+- `/src/components/Button/ButtonStyle.css` (líneas 94-126, 186-236)
+- `/README.md` (sección "Tamaños Disponibles" expandida con detalles completos)
+
+### Sin cambios en:
+-  TypeScript interfaces (ButtonProps, ButtonSize permanecen iguales)
+-  Funcionalidad del componente (sin cambios en Button.tsx)
+-  API pública del componente (mismos props y comportamiento)
+-  Accesibilidad (WCAG 2.1 AA se mantiene intacto)
+-  Compatibilidad hacia atrás (mismas clases CSS, sin breaking changes)
+
+## Justificación
+
+Este ajuste mejora la consistencia visual del componente Button eliminando variaciones dinámicas de tamaño que podían causar inconsistencias visuales entre diferentes viewports. Los nuevos tamaños están estandarizados, son más predecibles y ofrecen mejor usabilidad manteniendo los estándares de accesibilidad (mínimo 36px de altura táctil).
+
+### Beneficios:
+-  **Consistencia**: Tamaños fijos y predecibles en todos los dispositivos
+-  **Precisión**: Cálculos exactos usando variables del sistema de diseño
+-  **Accesibilidad**: Se mantiene el mínimo de 36px para targets táctiles
+-  **Mantenibilidad**: Código más legible sin clamps complejos
+-  **Rollback fácil**: Código anterior documentado en README
+
+## Testing realizado
+
+```bash
+ npm run lint   # Sin errores
+ npm run build  # Build exitoso en 3.03s
+ Verificación visual en dev mode
+ Sin cambios en TypeScript (tsc -b clean)
+```
+
+---
+
 # 01/10/2025 - Cambios en ProjectsSection: Texto sobre la primera imagen
 
 ## Cambios realizados
@@ -51,7 +111,7 @@ Un sitio web moderno y totalmente responsivo para Simétrica.
 - HTML semántico
 - Estructura de headings jerárquica
 
-## 🛠️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 
 - **React 19.1.1** - Framework principal
 - **TypeScript** - Tipado estático
@@ -155,9 +215,40 @@ const buttonRef = useRef<HTMLButtonElement>(null);
 
 #### **Tamaños Disponibles:**
 
-- **sm**: 12px padding, ideal para acciones menores
-- **md**: 16px padding, tamaño estándar recomendado  
-- **lg**: 24px padding, para CTAs principales
+**ACTUALIZADO 2025-10-01**: Ajuste de tamaños para mejor consistencia visual y usabilidad
+
+- **sm (small)**: 
+  - Padding: ~0.4rem vertical × 0.75rem horizontal (6.4px × 12px)
+  - Font-size: 0.875rem (14px)
+  - Min-height: 36px
+  - Ideal para: Botones secundarios, acciones compactas, espacios reducidos
+
+- **md (medium - default)**:
+  - Padding: ~0.6rem vertical × 1rem horizontal (9.6px × 16px)
+  - Font-size: 1rem (16px)
+  - Min-height: 44px
+  - Ideal para: Balance óptimo, tamaño estándar recomendado para la mayoría de casos
+
+- **lg (large)**:
+  - Padding: ~0.9rem vertical × 1.75rem horizontal (14.4px × 28px)
+  - Font-size: 1.125rem (18px)
+  - Min-height: 52px
+  - Ideal para: CTAs principales, botones destacados, alta visibilidad
+
+**Notas importantes:**
+- Los tamaños se adaptan automáticamente en diferentes breakpoints (móvil, tablet, desktop)
+- Se eliminaron clamps dinámicos para favorecer tamaños fijos y consistentes
+- Todos los tamaños usan variables CSS del sistema (--spacing-*) con cálculos precisos
+- Mantienen accesibilidad táctil (min 36px) en todos los dispositivos
+
+**Rollback:** Si necesitas volver a los tamaños anteriores:
+```css
+/* Tamaños previos (pre-2025-10-01) */
+.button--sm { padding: var(--spacing-sm) var(--spacing-md); font-size: clamp(0.8rem, 1vw, 0.875rem); }
+.button--md { padding: var(--spacing-md) var(--spacing-lg); font-size: clamp(0.875rem, 1.2vw, 1rem); }
+.button--lg { padding: var(--spacing-lg) var(--spacing-xl); font-size: clamp(1rem, 1.4vw, 1.125rem); }
+```
+
 
 ### **Footer Component**
 
@@ -210,13 +301,13 @@ interface FooterProps extends HTMLAttributes<HTMLElement> {
 Un formulario de contacto completo, accesible y con validación del lado del cliente.
 
 #### **Características del ContactForm:**
-- ✅ **Totalmente Accesible** - WCAG 2.1 AA compliant con ARIA labels
-- ✅ **Validación sin dependencias** - Email regex, campos requeridos, longitudes
-- ✅ **Estados de envío** - idle, sending, success, error con feedback visual
-- ✅ **Anti-spam** - Campo honeypot invisible para bots
-- ✅ **TypeScript completo** - Interfaces tipadas y props flexibles
-- ✅ **Responsive** - Mobile-first, grid adaptativo
-- ✅ **Integración lista** - Stub preparado para backend real
+-  **Totalmente Accesible** - WCAG 2.1 AA compliant con ARIA labels
+-  **Validación sin dependencias** - Email regex, campos requeridos, longitudes
+-  **Estados de envío** - idle, sending, success, error con feedback visual
+-  **Anti-spam** - Campo honeypot invisible para bots
+-  **TypeScript completo** - Interfaces tipadas y props flexibles
+-  **Responsive** - Mobile-first, grid adaptativo
+-  **Integración lista** - Stub preparado para backend real
 
 #### **Uso Básico:**
 
