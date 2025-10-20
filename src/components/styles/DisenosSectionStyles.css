@@ -1,0 +1,68 @@
+.designs-section {
+  background-color: #1c1c1c;
+  color: #fff;
+  padding: 4rem 2rem;
+}
+
+.designs-section__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.designs-section__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+/* Cada tarjeta */
+.designs-section__card {
+  position: relative;
+  overflow: hidden;
+  background-color: #4e2e1f; /* marrón */
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+}
+
+.designs-section__card:hover {
+  transform: translateY(-6px);
+}
+
+/* Imagen de fondo */
+.designs-section__image {
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.6);
+  height: 300px;
+  transition: filter 0.3s ease;
+}
+
+.designs-section__card:hover .designs-section__image {
+  filter: brightness(1);
+}
+
+/* Capa de texto */
+.designs-section__overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(75, 43, 28, 0.95);
+  text-align: center;
+  padding: 1.2rem 0;
+}
+
+.designs-section__overlay h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .designs-section__grid {
+    grid-template-columns: 1fr;
+  }
+}
