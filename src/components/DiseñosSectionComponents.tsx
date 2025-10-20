@@ -1,30 +1,32 @@
-import Diseno from "../assets/Diseños.png"
 import "./styles/DisenosSectionStyles.css"
+import Image from "../assets/Diseños.png"
 
 const DisenosSection = () => {
-    const designs = [
-        { title: "Diseño minimalista", image: Diseno },
-        { title: "Interior moderno", image: Diseno },
-        { title: "Diseño modernos", image: Diseno },
-        { title: "Diseño futurista", image: Diseno },
-    ] 
-
     return (
         <section className="designs-section">
-            <div className="container">
-                <h2 className="designs-section__title">Nuestros diseños</h2>
-                <div className="designs-section__grid">
-                    {designs.map((item, index) => (
-                        <div key={index} className="designs-section__card">
-                            <div
-                                className="designs-section__image"
-                                style={{ backgroundImage: `url(${item.image})` }}>
-                            </div>
-                            <div className="designs-section__overlay">
-                                <h3>{item.title}</h3>
-                            </div>
-                        </div>
-                    ))}
+            <h1>Nuestros diseños</h1>
+
+            <div className="design-section__column">
+                <div className="minimalist-design-section">
+                    <img src={Image} alt="Diseños" className="designs-image" />
+                    <h2 className="designs-title">Diseños Minimalistas</h2>
+                </div>     
+
+                <div className="modern-design-section">
+                    <img src={Image} alt="Diseños" className="designs-image" />
+                    <h2 className="designs-title">Diseños Modernos</h2>
+                </div>
+            </div>
+
+            <div className="design-section__row">
+                <div className="futurist-design-section">
+                    <img src={Image} alt="Diseños" className="designs-image" />
+                    <h2 className="designs-title">Diseños Futuristas</h2>
+                </div>
+
+                <div className="interior-design-section">
+                    <img src={Image} alt="Diseños" className="designs-image" />
+                    <h2 className="designs-title">Diseños Interiores</h2>
                 </div>
             </div>
         </section>
