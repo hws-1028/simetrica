@@ -48,13 +48,13 @@ const HeaderLayout = () => {
             >
                 <div className='container header__container'>
                     {/* Logo de la empresa */}
-                    <div className='logo-container'>
+                    <Link to="/" className='logo-container' aria-label="Volver al inicio">
                         <img 
                             src={Logo} 
                             alt="Simétrica - Empresa de diseño y construcción" 
                             className="logo-container__image"
                         />
-                    </div>
+                    </Link>
 
                     {/* Navegación desktop */}
                     <nav className='nav-container nav-container--desktop' aria-label="Navegación principal">

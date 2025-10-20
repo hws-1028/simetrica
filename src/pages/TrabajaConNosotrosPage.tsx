@@ -6,6 +6,42 @@ import './styles/TrabajaConNosotrosPageStyle.css';
 // Datos del Footer
 import LogoSimetrica from '../assets/logo-simetrica-blanco.png';
 
+// Datos de departamentos y municipios de Colombia
+const departamentosYMunicipios: { [key: string]: string[] } = {
+  "Amazonas": ["Leticia", "Puerto Nariño"],
+  "Antioquia": ["Medellín", "Bello", "Itagüí", "Envigado", "Apartadó", "Turbo", "Rionegro", "Sabaneta", "Caldas", "La Ceja", "Copacabana"],
+  "Arauca": ["Arauca", "Arauquita", "Saravena", "Fortul", "Tame"],
+  "Atlántico": ["Barranquilla", "Soledad", "Malambo", "Sabanalarga", "Puerto Colombia", "Galapa", "Baranoa"],
+  "Bolívar": ["Cartagena", "Magangué", "Turbaco", "Arjona", "El Carmen de Bolívar", "Mompós"],
+  "Boyacá": ["Tunja", "Duitama", "Sogamoso", "Chiquinquirá", "Paipa", "Villa de Leyva", "Puerto Boyacá"],
+  "Caldas": ["Manizales", "La Dorada", "Chinchiná", "Villamaría", "Riosucio"],
+  "Caquetá": ["Florencia", "San Vicente del Caguán", "Puerto Rico", "El Doncello"],
+  "Casanare": ["Yopal", "Aguazul", "Villanueva", "Monterrey", "Paz de Ariporo"],
+  "Cauca": ["Popayán", "Santander de Quilichao", "Puerto Tejada", "Patía", "Miranda"],
+  "Cesar": ["Valledupar", "Aguachica", "Bosconia", "Codazzi", "La Paz", "San Diego"],
+  "Chocó": ["Quibdó", "Istmina", "Condoto", "Acandí", "Bahía Solano"],
+  "Córdoba": ["Montería", "Cereté", "Lorica", "Sahagún", "Planeta Rica", "Montelíbano"],
+  "Cundinamarca": ["Bogotá", "Soacha", "Facatativá", "Zipaquirá", "Chía", "Fusagasugá", "Madrid", "Mosquera", "Funza", "Cajicá", "Girardot"],
+  "Guainía": ["Inírida"],
+  "Guaviare": ["San José del Guaviare", "Calamar", "El Retorno"],
+  "Huila": ["Neiva", "Pitalito", "Garzón", "La Plata", "Campoalegre"],
+  "La Guajira": ["Riohacha", "Maicao", "Uribia", "Manaure", "San Juan del Cesar"],
+  "Magdalena": ["Santa Marta", "Ciénaga", "Fundación", "Plato", "El Banco"],
+  "Meta": ["Villavicencio", "Acacías", "Granada", "Puerto López", "San Martín"],
+  "Nariño": ["Pasto", "Tumaco", "Ipiales", "Túquerres", "Samaniego"],
+  "Norte de Santander": ["Cúcuta", "Ocaña", "Pamplona", "Villa del Rosario", "Los Patios", "Tibú"],
+  "Putumayo": ["Mocoa", "Puerto Asís", "Valle del Guamuez", "Orito"],
+  "Quindío": ["Armenia", "Calarcá", "La Tebaida", "Montenegro", "Quimbaya"],
+  "Risaralda": ["Pereira", "Dosquebradas", "Santa Rosa de Cabal", "La Virginia"],
+  "San Andrés y Providencia": ["San Andrés", "Providencia"],
+  "Santander": ["Bucaramanga", "Floridablanca", "Girón", "Piedecuesta", "Barrancabermeja", "San Gil", "Socorro"],
+  "Sucre": ["Sincelejo", "Corozal", "Sampués", "San Marcos", "Tolú"],
+  "Tolima": ["Ibagué", "Espinal", "Melgar", "Honda", "Chaparral", "Líbano"],
+  "Valle del Cauca": ["Cali", "Palmira", "Buenaventura", "Tuluá", "Cartago", "Buga", "Jamundí", "Yumbo"],
+  "Vaupés": ["Mitú", "Carurú"],
+  "Vichada": ["Puerto Carreño", "La Primavera", "Cumaribo"]
+};
+
 const TrabajaConNosotrosPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -15,7 +51,8 @@ const TrabajaConNosotrosPage: React.FC = () => {
     numeroContacto: '',
     fechaNacimiento: '',
     correoElectronico: '',
-    ciudadDepartamento: '',
+    departamento: '',
+    municipio: '',
     
     // Información laboral
     especialidades: [] as string[],
@@ -31,6 +68,14 @@ const TrabajaConNosotrosPage: React.FC = () => {
     referencias: [{ nombre: '', telefono: '' }],
     observaciones: ''
   });
+
+  const [errors, setErrors] = useState({
+    numeroIdentificacion: '',
+    numeroContacto: '',
+    correoElectronico: ''
+  });
+
+  const [municipiosDisponibles, setMunicipiosDisponibles] = useState<string[]>([]);
 
   // Configuración de datos para Footer
   const footerColumns = [
@@ -64,9 +109,65 @@ const TrabajaConNosotrosPage: React.FC = () => {
     { label: "Instagram", href: "https://instagram.com/simetrica", external: true }
   ];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  // Validación de correo electrónico
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Validación de número de identificación
+  const validateIdentificacion = (id: string): boolean => {
+    const numbersOnly = /^\d+$/;
+    return numbersOnly.test(id) && id.length >= 7 && id.length <= 10;
+  };
+
+  // Validación de número de contacto
+  const validateNumeroContacto = (numero: string): boolean => {
+    const numbersOnly = /^\d+$/;
+    return numbersOnly.test(numero) && numero.length === 10;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Validaciones específicas
+    if (name === 'numeroIdentificacion') {
+      if (value === '' || /^\d+$/.test(value)) {
+        setFormData(prev => ({ ...prev, [name]: value }));
+        if (value === '') {
+          setErrors(prev => ({ ...prev, numeroIdentificacion: '' }));
+        } else if (!validateIdentificacion(value)) {
+          setErrors(prev => ({ ...prev, numeroIdentificacion: 'Debe contener entre 7 y 10 números' }));
+        } else {
+          setErrors(prev => ({ ...prev, numeroIdentificacion: '' }));
+        }
+      }
+    } else if (name === 'numeroContacto') {
+      if (value === '' || /^\d+$/.test(value)) {
+        setFormData(prev => ({ ...prev, [name]: value }));
+        if (value === '') {
+          setErrors(prev => ({ ...prev, numeroContacto: '' }));
+        } else if (!validateNumeroContacto(value)) {
+          setErrors(prev => ({ ...prev, numeroContacto: 'Debe contener exactamente 10 números' }));
+        } else {
+          setErrors(prev => ({ ...prev, numeroContacto: '' }));
+        }
+      }
+    } else if (name === 'correoElectronico') {
+      setFormData(prev => ({ ...prev, [name]: value }));
+      if (value === '') {
+        setErrors(prev => ({ ...prev, correoElectronico: '' }));
+      } else if (!validateEmail(value)) {
+        setErrors(prev => ({ ...prev, correoElectronico: 'Correo electrónico inválido' }));
+      } else {
+        setErrors(prev => ({ ...prev, correoElectronico: '' }));
+      }
+    } else if (name === 'departamento') {
+      setFormData(prev => ({ ...prev, departamento: value, municipio: '' }));
+      setMunicipiosDisponibles(departamentosYMunicipios[value] || []);
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleCheckboxChange = (especialidad: string) => {
@@ -105,6 +206,34 @@ const TrabajaConNosotrosPage: React.FC = () => {
   };
 
   const handleContinuar = () => {
+    // Validar datos del paso 1 antes de continuar
+    if (currentStep === 1) {
+      if (!formData.nombreCompleto.trim()) {
+        alert('Por favor ingrese su nombre completo');
+        return;
+      }
+      if (!validateIdentificacion(formData.numeroIdentificacion)) {
+        alert('Número de identificación debe contener entre 7 y 10 dígitos');
+        return;
+      }
+      if (!validateNumeroContacto(formData.numeroContacto)) {
+        alert('Número de contacto debe contener exactamente 10 dígitos');
+        return;
+      }
+      if (!formData.fechaNacimiento) {
+        alert('Por favor ingrese su fecha de nacimiento');
+        return;
+      }
+      if (!validateEmail(formData.correoElectronico)) {
+        alert('Por favor ingrese un correo electrónico válido');
+        return;
+      }
+      if (!formData.departamento || !formData.municipio) {
+        alert('Por favor seleccione departamento y municipio');
+        return;
+      }
+    }
+    
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -165,6 +294,7 @@ const TrabajaConNosotrosPage: React.FC = () => {
                     value={formData.nombreCompleto}
                     onChange={handleInputChange}
                     className="trabajo-page__input"
+                    required
                   />
                 </div>
 
@@ -172,22 +302,32 @@ const TrabajaConNosotrosPage: React.FC = () => {
                   <input
                     type="text"
                     name="numeroIdentificacion"
-                    placeholder="Número de identificación"
+                    placeholder="Número de identificación (7-10 dígitos)"
                     value={formData.numeroIdentificacion}
                     onChange={handleInputChange}
-                    className="trabajo-page__input"
+                    className={`trabajo-page__input ${errors.numeroIdentificacion ? 'trabajo-page__input--error' : ''}`}
+                    maxLength={10}
+                    required
                   />
+                  {errors.numeroIdentificacion && (
+                    <span className="trabajo-page__error">{errors.numeroIdentificacion}</span>
+                  )}
                 </div>
 
                 <div className="trabajo-page__field">
                   <input
                     type="tel"
                     name="numeroContacto"
-                    placeholder="Número de contacto"
+                    placeholder="Número de contacto (10 dígitos)"
                     value={formData.numeroContacto}
                     onChange={handleInputChange}
-                    className="trabajo-page__input"
+                    className={`trabajo-page__input ${errors.numeroContacto ? 'trabajo-page__input--error' : ''}`}
+                    maxLength={10}
+                    required
                   />
+                  {errors.numeroContacto && (
+                    <span className="trabajo-page__error">{errors.numeroContacto}</span>
+                  )}
                 </div>
 
                 <div className="trabajo-page__field">
@@ -202,6 +342,7 @@ const TrabajaConNosotrosPage: React.FC = () => {
                       if (!e.target.value) e.target.type = 'text';
                     }}
                     className="trabajo-page__input"
+                    required
                   />
                 </div>
 
@@ -212,19 +353,43 @@ const TrabajaConNosotrosPage: React.FC = () => {
                     placeholder="Correo electrónico"
                     value={formData.correoElectronico}
                     onChange={handleInputChange}
-                    className="trabajo-page__input"
+                    className={`trabajo-page__input ${errors.correoElectronico ? 'trabajo-page__input--error' : ''}`}
+                    required
                   />
+                  {errors.correoElectronico && (
+                    <span className="trabajo-page__error">{errors.correoElectronico}</span>
+                  )}
                 </div>
 
                 <div className="trabajo-page__field">
-                  <input
-                    type="text"
-                    name="ciudadDepartamento"
-                    placeholder="Ciudad y departamento de residencia"
-                    value={formData.ciudadDepartamento}
+                  <select
+                    name="departamento"
+                    value={formData.departamento}
                     onChange={handleInputChange}
-                    className="trabajo-page__input"
-                  />
+                    className="trabajo-page__select"
+                    required
+                  >
+                    <option value="">Seleccione un departamento</option>
+                    {Object.keys(departamentosYMunicipios).sort().map((dept) => (
+                      <option key={dept} value={dept}>{dept}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="trabajo-page__field">
+                  <select
+                    name="municipio"
+                    value={formData.municipio}
+                    onChange={handleInputChange}
+                    className="trabajo-page__select"
+                    disabled={!formData.departamento}
+                    required
+                  >
+                    <option value="">Seleccione un municipio</option>
+                    {municipiosDisponibles.map((municipio) => (
+                      <option key={municipio} value={municipio}>{municipio}</option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="trabajo-page__actions">
@@ -352,14 +517,26 @@ const TrabajaConNosotrosPage: React.FC = () => {
             {currentStep === 3 && (
               <div className="trabajo-page__form-step">
                 <div className="trabajo-page__field">
-                  <input
-                    type="text"
+                  <select
                     name="cantidadProyectos"
-                    placeholder="Cantidad de proyectos en los que ha trabajado"
                     value={formData.cantidadProyectos}
                     onChange={handleInputChange}
-                    className="trabajo-page__input"
-                  />
+                    className="trabajo-page__select"
+                    required
+                  >
+                    <option value="">Cantidad de proyectos en los que ha trabajado</option>
+                    <option value="0-5">0 a 5 proyectos</option>
+                    <option value="5-10">5 a 10 proyectos</option>
+                    <option value="10-15">10 a 15 proyectos</option>
+                    <option value="15-20">15 a 20 proyectos</option>
+                    <option value="20-25">20 a 25 proyectos</option>
+                    <option value="25-30">25 a 30 proyectos</option>
+                    <option value="30-35">30 a 35 proyectos</option>
+                    <option value="35-40">35 a 40 proyectos</option>
+                    <option value="40-45">40 a 45 proyectos</option>
+                    <option value="45-50">45 a 50 proyectos</option>
+                    <option value="50+">Más de 50 proyectos</option>
+                  </select>
                 </div>
 
                 <div className="trabajo-page__field-full">

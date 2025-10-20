@@ -1,6 +1,7 @@
 /* MOVED: src/components/Footer -> src/layouts/Footer — motivo: reorganización de layout - Fecha: 2025-10-01 */
 // src/layouts/Footer/Footer.tsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './FooterStyle.css';
 
 /* Interfaces TypeScript para props tipadas y reutilización */
@@ -61,12 +62,14 @@ const Footer: React.FC<FooterProps> = ({
           {/* Branding section - Logo de la empresa */}
           {logoSrc && (
             <div className="footer__brand">
-              <img 
-                src={logoSrc} 
-                alt={logoAlt}
-                className="footer__logo"
-                loading="lazy" // Optimización de performance
-              />
+              <Link to="/" aria-label="Volver al inicio">
+                <img 
+                  src={logoSrc} 
+                  alt={logoAlt}
+                  className="footer__logo"
+                  loading="lazy" // Optimización de performance
+                />
+              </Link>
             </div>
           )}
 

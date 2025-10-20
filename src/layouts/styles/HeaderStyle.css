@@ -41,9 +41,12 @@
 .header__container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: var(--spacing-md) var(--spacing-md);
+    justify-content: center;
+    gap: var(--spacing-xxl);
+    padding: var(--spacing-md) var(--spacing-xxl);
     min-height: 70px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 /* Logo container con mejores prácticas de diseño */
@@ -52,6 +55,13 @@
     align-items: center;
     gap: var(--spacing-sm);
     flex-shrink: 0; /* Previene que el logo se encoja */
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.logo-container:hover {
+    opacity: 0.85;
 }
 
 .logo-container__image {
@@ -61,14 +71,14 @@
     transition: transform 0.3s ease;
 }
 
-.logo-container__image:hover {
+.logo-container:hover .logo-container__image {
     transform: scale(1.05); /* Micro-interacción en hover */
 }
 
 /* Navegación desktop */
 .nav-container--desktop {
     display: flex;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-lg);
     align-items: center;
 }
 

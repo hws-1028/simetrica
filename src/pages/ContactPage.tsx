@@ -77,9 +77,6 @@ const ContactPage: React.FC = () => {
                   <h1 className="contact-page__title">
                     Contáctanos
                   </h1>
-                  <p className="contact-page__subtitle">
-                    Envíanos un email
-                  </p>
                 </div>
                 
                 <ContactForm 

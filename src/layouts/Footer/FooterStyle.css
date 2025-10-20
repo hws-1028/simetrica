@@ -44,6 +44,17 @@
   margin-bottom: var(--spacing-xl);
 }
 
+.footer__brand a {
+  display: inline-block;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  text-decoration: none;
+}
+
+.footer__brand a:hover {
+  opacity: 0.85;
+}
+
 .footer__logo {
   width: 120px;
   height: 120px;
@@ -54,7 +65,7 @@
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
-.footer__logo:hover {
+.footer__brand a:hover .footer__logo {
   transform: scale(1.05);
   filter: brightness(1.1);
 }
