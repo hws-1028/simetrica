@@ -9,7 +9,7 @@ import ContactForm from '../components/ContactForm';
 import './styles/ContactPageStyle.css';
 
 // Datos del Footer (reutilizados de HomePage)
-import LogoSimetrica from '../assets/logo-simetrica.png';
+import LogoSimetrica from '../assets/logo-simetrica-blanco.png';
 
 const ContactPage: React.FC = () => {
   // Configuración de datos para Footer (manteniendo consistencia con HomePage)

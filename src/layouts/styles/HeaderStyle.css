@@ -55,21 +55,14 @@
 }
 
 .logo-container__image {
-    width: 24px;
-    height: 36px;
+    width: 100px;
+    height: 100px;
     object-fit: contain; /* Mantiene proporción de la imagen */
     transition: transform 0.3s ease;
 }
 
 .logo-container__image:hover {
     transform: scale(1.05); /* Micro-interacción en hover */
-}
-
-.logo-container__title {
-    font-size: 1.25rem;
-    font-weight: var(--font-weight-bold);
-    letter-spacing: 0.5px; /* Mejor legibilidad */
-    margin: 0;
 }
 
 /* Navegación desktop */
@@ -239,12 +232,8 @@
     }
     
     .logo-container__image {
-        width: 20px;
-        height: 30px;
-    }
-    
-    .logo-container__title {
-        font-size: 1.1rem;
+        width: 70px;
+        height: 70px;
     }
     
     .nav-container--mobile {
@@ -261,8 +250,9 @@
         padding: var(--spacing-xs) var(--spacing-md);
     }
     
-    .logo-container__title {
-        font-size: 1rem;
+    .logo-container__image {
+        width: 60px;
+        height: 60px;
     }
     
     .nav-container--mobile {
@@ -284,13 +274,9 @@
         font-size: 1rem;
     }
     
-    .logo-container__title {
-        font-size: 1.5rem;
-    }
-    
     .logo-container__image {
-        width: 28px;
-        height: 42px;
+        width: 110px;
+        height: 110px;
     }
 }
 
@@ -301,13 +287,9 @@
         padding: var(--spacing-xl) 4rem;
     }
     
-    .logo-container__title {
-        font-size: 1.75rem;
-    }
-    
     .logo-container__image {
-        width: 32px;
-        height: 48px;
+        width: 120px;
+        height: 120px;
     }
     
     .nav-container__link {

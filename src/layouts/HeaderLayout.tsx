@@ -1,6 +1,6 @@
 // src/layouts/HeaderLayout.tsx
 import { useState, useEffect } from 'react';
-import Logo from '../assets/logo-simetrica.png';
+import Logo from '../assets/logo-simetrica-blanco.png';
 import { Link } from 'react-router-dom';
 import { useNavVisibility } from '../hooks/useNavVisibility'; // AÑADIDO: Hook para comportamiento dinámico
 import "./styles/HeaderStyle.css"
@@ -47,14 +47,13 @@ const HeaderLayout = () => {
                 aria-hidden={!isNavVisible}
             >
                 <div className='container header__container'>
-                    {/* Logo y nombre de la empresa */}
+                    {/* Logo de la empresa */}
                     <div className='logo-container'>
                         <img 
                             src={Logo} 
-                            alt="Logo Simétrica - Empresa de diseño y construcción" 
+                            alt="Simétrica - Empresa de diseño y construcción" 
                             className="logo-container__image"
                         />
-                        <h1 className="logo-container__title">SIMÉTRICA</h1>
                     </div>
 
                     {/* Navegación desktop */}

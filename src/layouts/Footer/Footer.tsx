@@ -58,7 +58,7 @@ const Footer: React.FC<FooterProps> = ({
         {/* Sección superior con logo y columnas de navegación */}
         <div className="footer__main">
           
-          {/* Branding section - Logo y información de la empresa */}
+          {/* Branding section - Logo de la empresa */}
           {logoSrc && (
             <div className="footer__brand">
               <img 
@@ -67,12 +67,6 @@ const Footer: React.FC<FooterProps> = ({
                 className="footer__logo"
                 loading="lazy" // Optimización de performance
               />
-              <div className="footer__brand-info">
-                <h3 className="footer__brand-title">SIMÉTRICA</h3>
-                <p className="footer__brand-description">
-                  Empresa líder en diseño, proyectos y construcción
-                </p>
-              </div>
             </div>
           )}
 
