@@ -5,6 +5,8 @@ import "./App.css";
 
 // Lazy loading para mejor performance
 const Home = lazy(() => import("./pages/HomePage.tsx"));
+const ContactPage = lazy(() => import("./pages/ContactPage.tsx"));
+const TrabajaConNosotrosPage = lazy(() => import("./pages/TrabajaConNosotrosPage.tsx"));
 
 // Componente de loading para Suspense
 const LoadingSpinner = () => (
@@ -25,8 +27,8 @@ function App() {
           <Route path="/asociados" element={<div>Página de Asociados (En desarrollo)</div>} />
           <Route path="/proyectos" element={<div>Página de Proyectos (En desarrollo)</div>} />
           <Route path="/diseños" element={<div>Página de Diseños (En desarrollo)</div>} />
-          <Route path="/trabaja-con-nosotros" element={<div>Página Trabaja con nosotros (En desarrollo)</div>} />
-          <Route path="/contacto" element={<div>Página de Contacto (En desarrollo)</div>} />
+          <Route path="/trabaja-con-nosotros" element={<TrabajaConNosotrosPage />} />
+          <Route path="/contacto" element={<ContactPage />} />
           {/* Ruta 404 */}
           <Route path="*" element={<div>Página no encontrada</div>} />
         </Routes>

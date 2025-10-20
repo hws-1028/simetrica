@@ -1,22 +1,16 @@
-/* ARCHIVO AÑADIDO: ContactForm component styles - 2025-10-01 */
-/* ContactFormStyle.css - Estilos responsive y accesibles siguiendo convenciones del proyecto */
-/* Utiliza variables CSS globales del sistema existente para consistencia */
+/* ACTUALIZADO: ContactForm component styles - 2025-10-20 */
+/* ContactFormStyle.css - Diseño oscuro moderno según especificaciones */
 
 /* Clase base del formulario */
 .contact-form {
   width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: var(--spacing-lg);
-  
-  /* Mejoras visuales modernas manteniendo branding */
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  
-  /* Transición suave para interacciones */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  backdrop-filter: none;
+  border-radius: 0;
+  border: none;
 }
 
 /* Grid responsivo para campos del formulario */
@@ -25,15 +19,15 @@
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-xl);
   
-  /* Mobile first: 1 columna por defecto */
-  grid-template-columns: 1fr;
+  /* 2 columnas desde el inicio */
+  grid-template-columns: 1fr 1fr;
 }
 
 /* Campo individual del formulario */
 .contact-form__field {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-xs);
 }
 
 /* Campo que ocupa toda la fila (mensaje) */
@@ -41,21 +35,26 @@
   grid-column: 1 / -1;
 }
 
-/* Etiquetas de los campos */
+/* Etiquetas de los campos - ocultas visualmente pero accesibles */
 .contact-form__label {
-  font-size: 0.9rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--text-color);
-  margin-bottom: var(--spacing-xs);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* Estilos base para inputs */
 .contact-form__input,
 .contact-form__textarea {
-  padding: var(--spacing-md);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text-color);
   font-family: inherit;
   font-size: 1rem;
@@ -72,41 +71,42 @@
 /* Placeholders con mejor contraste */
 .contact-form__input::placeholder,
 .contact-form__textarea::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
   opacity: 1; /* Firefox fix */
+  font-size: 0.9rem;
 }
 
 /* Estados de foco para accesibilidad */
 .contact-form__input:focus,
 .contact-form__textarea:focus {
   border-color: var(--primary-color);
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 3px rgba(126, 74, 53, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
 }
 
 /* Estados de hover */
 .contact-form__input:hover:not(:focus),
 .contact-form__textarea:hover:not(:focus) {
   border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 /* Estados de error */
 .contact-form__input--error,
 .contact-form__textarea--error {
   border-color: #ff6b6b;
-  background: rgba(255, 107, 107, 0.1);
+  background: rgba(255, 107, 107, 0.05);
 }
 
 .contact-form__input--error:focus,
 .contact-form__textarea--error:focus {
-  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+  box-shadow: none;
 }
 
 /* Textarea específico */
 .contact-form__textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 180px;
   font-family: inherit;
 }
 
@@ -143,11 +143,12 @@
   background: var(--primary-color);
   color: var(--text-color);
   border: none;
-  padding: var(--spacing-md) var(--spacing-xl);
-  border-radius: 8px;
+  padding: var(--spacing-md) var(--spacing-xxl);
+  border-radius: 6px;
   font-size: 1rem;
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-normal);
   cursor: pointer;
+  min-width: 160px;
   
   /* Transiciones para interacciones */
   transition: all 0.3s ease;
@@ -158,9 +159,9 @@
 
 /* Estados del botón */
 .contact-form__submit:hover:not(:disabled) {
-  background: var(--secondary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(126, 74, 53, 0.3);
+  background: #8B5A42;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(126, 74, 53, 0.4);
 }
 
 .contact-form__submit:focus {
@@ -205,15 +206,27 @@
 
 /* BREAKPOINTS RESPONSIVOS */
 
+/* Mobile devices (hasta 767px) */
+@media screen and (max-width: 767px) {
+  .contact-form__grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .contact-form__textarea {
+    min-height: 120px;
+  }
+}
+
 /* Tablet devices (768px - 1023px) */
 @media screen and (min-width: 768px) {
   .contact-form {
-    padding: var(--spacing-xl);
+    padding: 0;
   }
   
   .contact-form__grid {
     grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-xl) var(--spacing-lg);
+    gap: var(--spacing-lg);
   }
   
   .contact-form__actions {
