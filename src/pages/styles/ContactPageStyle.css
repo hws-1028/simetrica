@@ -98,7 +98,7 @@
 }
 
 .contact-page__info-item:hover .contact-page__info-icon {
-  filter: brightness(1.2);
+  filter: brightness(0) invert(1) brightness(1.2);
   transform: scale(1.08);
 }
 
@@ -107,7 +107,7 @@
   height: 56px;
   object-fit: contain;
   margin-bottom: var(--spacing-xs);
-  filter: brightness(0.9);
+  filter: brightness(0) invert(1);
   transition: all 0.3s ease;
 }
 

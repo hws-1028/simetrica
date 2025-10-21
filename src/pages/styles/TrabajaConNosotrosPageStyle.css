@@ -145,7 +145,7 @@
 }
 
 .trabajo-page__input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 1);
 }
 
 .trabajo-page__input[type="date"] {
@@ -214,7 +214,7 @@
 }
 
 .trabajo-page__textarea::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 1);
 }
 
 .trabajo-page__char-count {
