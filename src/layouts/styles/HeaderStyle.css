@@ -53,7 +53,7 @@
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 0.1rem; /* Espacio muy reducido entre logo y texto */
+    gap: 0; /* Sin espacio - super pegados */
     flex-shrink: 0; /* Previene que el logo se encoja */
     cursor: pointer;
     text-decoration: none;
@@ -69,6 +69,7 @@
     height: 100px;
     object-fit: contain; /* Mantiene proporción de la imagen */
     transition: transform 0.3s ease;
+    margin-right: -10px;
 }
 
 .logo-container__text {
