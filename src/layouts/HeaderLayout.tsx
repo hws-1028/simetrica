@@ -1,6 +1,6 @@
 // src/layouts/HeaderLayout.tsx
 import { useState, useEffect } from 'react';
-import Logo from '../assets/logo-simetrica-blanco.png';
+import Logo from '../assets/logoSi-blanco.png';
 import { Link } from 'react-router-dom';
 import { useNavVisibility } from '../hooks/useNavVisibility'; // AÑADIDO: Hook para comportamiento dinámico
 import "./styles/HeaderStyle.css"
@@ -47,21 +47,21 @@ const HeaderLayout = () => {
                 aria-hidden={!isNavVisible}
             >
                 <div className='container header__container'>
+                    {/* Logo de la empresa */}
+                    <Link to="/" className='logo-container' aria-label="Volver al inicio">
+                        <img 
+                            src={Logo} 
+                            alt="Simétrica" 
+                            className="logo-container__icon"
+                        />
+                        <span className="logo-container__text">SIMÉTRICA</span>
+                    </Link>
+
                     {/* Navegación desktop */}
                     <nav className='nav-container nav-container--desktop' aria-label="Navegación principal">
                         <Link to="/" className="nav-container__link">Inicio</Link>
                         <Link to="/asociados" className="nav-container__link">Asociados</Link>
                         <Link to="/proyectos" className="nav-container__link">Proyectos</Link>
-                        
-                        {/* Logo de la empresa en el centro */}
-                        <Link to="/" className='logo-container' aria-label="Volver al inicio">
-                            <img 
-                                src={Logo} 
-                                alt="Simétrica - Empresa de diseño y construcción" 
-                                className="logo-container__image"
-                            />
-                        </Link>
-                        
                         <Link to="/diseños" className="nav-container__link">Diseños</Link>
                         <Link to="/trabaja-con-nosotros" className="nav-container__link">Trabaja con nosotros</Link>
                         <Link className='nav-container__link nav-container__link--cta' to="/contacto">Contacto</Link>
