@@ -66,6 +66,11 @@
   /* Remover estilos por defecto del navegador */
   outline: none;
   appearance: none;
+  
+  /* Forzar colores para prevenir estilos del navegador en modo oscuro */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color-scheme: dark;
 }
 
 /* Placeholders con mejor contraste */
@@ -323,13 +328,26 @@
 /* Dark mode enhancements */
 @media (prefers-color-scheme: dark) {
   .contact-form {
-    background: rgba(0, 0, 0, 0.6);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: transparent;
+    border-color: transparent;
   }
   
   .contact-form__input,
   .contact-form__textarea {
-    background: rgba(0, 0, 0, 0.4);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(126, 74, 53, 0.5) !important;
+    color: var(--text-color) !important;
+  }
+  
+  .contact-form__input:focus,
+  .contact-form__textarea:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: var(--primary-color) !important;
+  }
+  
+  .contact-form__input:hover:not(:focus),
+  .contact-form__textarea:hover:not(:focus) {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
   }
 }
