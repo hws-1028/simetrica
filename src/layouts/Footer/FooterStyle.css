@@ -29,19 +29,17 @@
 .footer__main {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: var(--spacing-xl);
   margin-bottom: var(--spacing-xl);
+  align-items: center;
 }
 
-/* Branding section con logo - Centrado simétricamente */
+/* Branding section con logo - Centrado con columnas */
 .footer__brand {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
-  width: 100%;
-  order: 1; /* Logo primero */
+  margin: 0;
 }
 
 .footer__brand a {
@@ -73,16 +71,17 @@
 /* Navegación con columnas responsive */
 .footer__navigation {
   width: 100%;
-  order: 2; /* Navegación segundo */
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--spacing-xl);
 }
 
 .footer__columns {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-xl);
-  max-width: 900px;
-  margin: 0 auto;
-  justify-items: center;
+  display: flex;
+  justify-content: space-between; /* Distribuye el espacio equitativamente */
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1400px;
 }
 
 .footer__column {
@@ -151,28 +150,27 @@
 }
 
 /* Sección de redes sociales */
+/* Sección de redes sociales */
 .footer__social {
   margin-top: var(--spacing-lg);
   width: 100%;
-  order: 3; /* Redes sociales tercero */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 .footer__social-title {
   font-size: 1rem;
   font-weight: var(--font-weight-bold);
   margin: 0 0 var(--spacing-md) 0;
   color: var(--text-color);
-  text-align: center; /* Título centrado */
+  text-align: center;
 }
 
 .footer__social-links {
   display: flex;
   gap: var(--spacing-md);
   flex-wrap: nowrap; /* Mantener en una sola fila */
-  justify-content: center; /* Redes sociales centradas */
+  justify-content: center;
 }
 
 .footer__social-link {

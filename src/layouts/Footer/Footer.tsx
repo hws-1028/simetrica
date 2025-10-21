@@ -59,24 +59,25 @@ const Footer: React.FC<FooterProps> = ({
         {/* Sección superior con logo y columnas de navegación */}
         <div className="footer__main">
           
-          {/* Branding section - Logo de la empresa */}
-          {logoSrc && (
-            <div className="footer__brand">
-              <Link to="/" aria-label="Volver al inicio">
-                <img 
-                  src={logoSrc} 
-                  alt={logoAlt}
-                  className="footer__logo"
-                  loading="lazy" // Optimización de performance
-                />
-              </Link>
-            </div>
-          )}
-
-          {/* Navegación por columnas - Estructura semántica para SEO */}
+          {/* Navegación por columnas con logo incluido - Estructura semántica para SEO */}
           {columns.length > 0 && (
             <nav className="footer__navigation" aria-label="Enlaces del pie de página">
               <div className="footer__columns">
+                {/* Logo de la empresa como primera columna */}
+                {logoSrc && (
+                  <div className="footer__brand">
+                    <Link to="/" aria-label="Volver al inicio">
+                      <img 
+                        src={logoSrc} 
+                        alt={logoAlt}
+                        className="footer__logo"
+                        loading="lazy" // Optimización de performance
+                      />
+                    </Link>
+                  </div>
+                )}
+                
+                {/* Columnas de navegación */}
                 {columns.map((column, columnIndex) => (
                   <div key={columnIndex} className="footer__column">
                     <h4 className="footer__column-title">
