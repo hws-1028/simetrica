@@ -41,11 +41,10 @@
 .header__container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: var(--spacing-xxl);
+    justify-content: space-between;
     padding: var(--spacing-md) var(--spacing-xxl);
     min-height: 70px;
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
@@ -80,6 +79,8 @@
     display: flex;
     gap: var(--spacing-lg);
     align-items: center;
+    width: 100%;
+    justify-content: center;
 }
 
 .nav-container__link {
