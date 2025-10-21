@@ -95,11 +95,23 @@
   gap: var(--spacing-xs);
   width: 100%;
   margin-bottom: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-page__info-item:hover {
+  transform: translateY(-2px);
 }
 
 .contact-page__info-item:hover .contact-page__info-icon {
   filter: brightness(0) invert(1) brightness(1.2);
   transform: scale(1.08);
+}
+
+.contact-page__info-item:hover .contact-page__info-title {
+  color: var(--primary-color);
+  text-shadow: 0 0 8px rgba(126, 74, 53, 0.3);
 }
 
 .contact-page__info-icon {

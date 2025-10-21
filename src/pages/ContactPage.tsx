@@ -45,8 +45,11 @@ const ContactPage: React.FC = () => {
   ];
 
   const socialLinks = [
-    { label: "LinkedIn", href: "https://linkedin.com/company/simetrica", external: true },
-    { label: "Instagram", href: "https://instagram.com/simetrica", external: true }
+    { label: "Instagram", href: "https://www.instagram.com/simetrica_ia/", external: true },
+    { label: "Facebook", href: "https://www.facebook.com/share/17PvCWuUtm/?mibextid=wwXIfr", external: true },
+    { label: "TikTok", href: "https://www.tiktok.com/@simetrica7?_t=ZS-90L6hiOnqKe&_r=1", external: true },
+    { label: "Pinterest", href: "https://co.pinterest.com/insonorizacion_acustica7/?invite_code=dd12bf69cdd14ac8aecd84e3f084a435&sender=595601256878326965", external: true },
+    { label: "WhatsApp", href: "https://wa.me/573103858223", external: true }
   ];
 
   // Callbacks para el formulario
@@ -91,35 +94,35 @@ const ContactPage: React.FC = () => {
               <aside className="contact-page__info">
                 <div className="contact-page__info-grid">
                   {/* Teléfono */}
-                  <div className="contact-page__info-item">
+                  <a href="https://wa.me/573103858223" className="contact-page__info-item" target="_blank" rel="noopener noreferrer">
                     <img src={PhoneIcon} alt="Teléfono" className="contact-page__info-icon" />
                     <h3 className="contact-page__info-title">Teléfono</h3>
                     <p className="contact-page__info-value">Teléfono</p>
-                  </div>
+                  </a>
 
                   {/* Correo electrónico */}
-                  <div className="contact-page__info-item">
+                  <a href="mailto:contacto@simetrica.com" className="contact-page__info-item">
                     <img src={EmailIcon} alt="Correo electrónico" className="contact-page__info-icon" />
                     <h3 className="contact-page__info-title">Correo electrónico</h3>
                     <p className="contact-page__info-value">Correo</p>
-                  </div>
+                  </a>
                 </div>
                 
                 {/* Redes sociales - Separadas y más abajo */}
                 <div className="contact-page__social-links">
-                  <a href="https://instagram.com/simetrica" className="contact-page__social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.instagram.com/simetrica_ia/" className="contact-page__social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                     <img src={InstagramIcon} alt="Instagram" className="contact-page__social-icon" />
                   </a>
-                  <a href="https://tiktok.com/@simetrica" className="contact-page__social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.tiktok.com/@simetrica7?_t=ZS-90L6hiOnqKe&_r=1" className="contact-page__social-link" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
                     <img src={TikTokIcon} alt="TikTok" className="contact-page__social-icon" />
                   </a>
-                  <a href="https://wa.me/573001234567" className="contact-page__social-link" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/573103858223" className="contact-page__social-link" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
                     <img src={WhatsAppIcon} alt="WhatsApp" className="contact-page__social-icon" />
                   </a>
-                  <a href="https://pinterest.com/simetrica" className="contact-page__social-link" aria-label="Pinterest" target="_blank" rel="noopener noreferrer">
+                  <a href="https://co.pinterest.com/insonorizacion_acustica7/?invite_code=dd12bf69cdd14ac8aecd84e3f084a435&sender=595601256878326965" className="contact-page__social-link" aria-label="Pinterest" target="_blank" rel="noopener noreferrer">
                     <img src={PinterestIcon} alt="Pinterest" className="contact-page__social-icon" />
                   </a>
-                  <a href="https://facebook.com/simetrica" className="contact-page__social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.facebook.com/share/17PvCWuUtm/?mibextid=wwXIfr" className="contact-page__social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                     <img src={FacebookIcon} alt="Facebook" className="contact-page__social-icon" />
                   </a>
                 </div>

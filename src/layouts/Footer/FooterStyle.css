@@ -27,21 +27,21 @@
 
 /* Sección principal del footer con grid responsivo */
 .footer__main {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: var(--spacing-xl);
   margin-bottom: var(--spacing-xl);
-  
-  /* Grid responsive: 1 columna en móvil, adaptativo en desktop */
-  grid-template-columns: 1fr;
-  align-items: start;
 }
 
-/* Branding section con logo */
+/* Branding section con logo - Centrado simétricamente */
 .footer__brand {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--spacing-xl);
+  margin: 0 auto;
+  width: 100%;
+  order: 1; /* Logo primero */
 }
 
 .footer__brand a {
@@ -73,12 +73,16 @@
 /* Navegación con columnas responsive */
 .footer__navigation {
   width: 100%;
+  order: 2; /* Navegación segundo */
 }
 
 .footer__columns {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-lg);
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-xl);
+  max-width: 900px;
+  margin: 0 auto;
+  justify-items: center;
 }
 
 .footer__column {
@@ -149,6 +153,11 @@
 /* Sección de redes sociales */
 .footer__social {
   margin-top: var(--spacing-lg);
+  width: 100%;
+  order: 3; /* Redes sociales tercero */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .footer__social-title {
@@ -156,12 +165,14 @@
   font-weight: var(--font-weight-bold);
   margin: 0 0 var(--spacing-md) 0;
   color: var(--text-color);
+  text-align: center; /* Título centrado */
 }
 
 .footer__social-links {
   display: flex;
   gap: var(--spacing-md);
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Mantener en una sola fila */
+  justify-content: center; /* Redes sociales centradas */
 }
 
 .footer__social-link {

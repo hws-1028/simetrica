@@ -51,8 +51,11 @@ const Home = () => {
   ];
 
   const socialLinks = [
-    { label: "LinkedIn", href: "https://linkedin.com/company/simetrica", external: true },
-    { label: "Instagram", href: "https://instagram.com/simetrica", external: true }
+    { label: "Instagram", href: "https://www.instagram.com/simetrica_ia/", external: true },
+    { label: "Facebook", href: "https://www.facebook.com/share/17PvCWuUtm/?mibextid=wwXIfr", external: true },
+    { label: "TikTok", href: "https://www.tiktok.com/@simetrica7?_t=ZS-90L6hiOnqKe&_r=1", external: true },
+    { label: "Pinterest", href: "https://co.pinterest.com/insonorizacion_acustica7/?invite_code=dd12bf69cdd14ac8aecd84e3f084a435&sender=595601256878326965", external: true },
+    { label: "WhatsApp", href: "https://wa.me/573103858223", external: true }
   ];
 
   return (
