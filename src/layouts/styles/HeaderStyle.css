@@ -31,12 +31,6 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* AÑADIDO: Forzar visibilidad en hover incluso si está oculto */
-.header:hover {
-    transform: translateY(0) !important;
-    background: rgba(126, 74, 53, 0.502) !important; /* Color exacto en hover */
-}
-
 /* Contenedor del header con padding responsivo */
 .header__container {
     display: flex;
@@ -90,6 +84,44 @@
     gap: var(--spacing-lg);
     align-items: center;
     flex-shrink: 0; /* Evita que se encoja */
+}
+
+/* AÑADIDO: Container para botones de autenticación */
+.nav-container__auth {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    margin-left: var(--spacing-md);
+    padding-left: var(--spacing-md);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-container__username {
+    color: var(--text-color);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-normal);
+    opacity: 0.9;
+}
+
+.nav-container__username-mobile {
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: var(--spacing-sm);
+}
+
+.nav-container__link--logout {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-container__link--logout:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 .nav-container__link {

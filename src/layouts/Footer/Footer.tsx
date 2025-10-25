@@ -2,6 +2,7 @@
 // src/layouts/Footer/Footer.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/useAuth';
 import './FooterStyle.css';
 
 /* Interfaces TypeScript para props tipadas y reutilización */
@@ -40,6 +41,9 @@ const Footer: React.FC<FooterProps> = ({
   ariaLabel = 'Pie de página',
   socialLinks = []
 }) => {
+  
+  // Hook para verificar si el usuario es admin
+  const { isAdmin } = useAuth();
   
   // Función para manejar click en enlaces externos con analytics tracking
   const handleExternalLinkClick = (href: string, label: string) => {
@@ -129,6 +133,17 @@ const Footer: React.FC<FooterProps> = ({
                     {social.label}
                   </a>
                 ))}
+                
+                {/* Botón de Panel Admin - Solo visible para usuarios ADMIN */}
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className="footer__social-link"
+                    aria-label="Panel administrativo"
+                  >
+                    Panel Admin
+                  </Link>
+                )}
               </nav>
             </div>
           )}

@@ -3,7 +3,7 @@
 .trabajo-page {
   min-height: 100vh;
   position: relative;
-  padding-top: 100px;
+  padding-top: 140px; /* Espacio suficiente para header fijo (70px altura + margen) */
   background: #2b2b2b;
   color: var(--text-color);
   padding-bottom: var(--spacing-xxl);
@@ -472,7 +472,7 @@
 /* Mobile pequeño (320px - 480px) */
 @media screen and (max-width: 480px) {
   .trabajo-page {
-    padding-top: 70px;
+    padding-top: 120px; /* Ajustado para móvil (60px altura + margen) */
   }
 
   .trabajo-page__container {
