@@ -6,6 +6,9 @@ import Tabs from '../../components/admin/Tabs';
 import type { Tab } from '../../components/admin/Tabs';
 import ContactMessagesSection from './ContactMessagesSection';
 import WorkWithUsSection from './WorkWithUsSection';
+import ProjectsSection from './ProjectsSection';
+import DesignsSection from './DesignsSection';
+import LogoSimetrica from '../../assets/logo-simetrica-blanco.png';
 import './AdminPanelStyles.css';
 
 export default function AdminPanel() {
@@ -59,7 +62,7 @@ export default function AdminPanel() {
           <path d="M3 9h18M9 21V9"/>
         </svg>
       ),
-      content: <PlaceholderSection title="Proyectos" />,
+      content: <ProjectsSection />,
     },
     {
       id: 'designs',
@@ -70,7 +73,7 @@ export default function AdminPanel() {
           <path d="M12 1v6m0 6v6"/>
         </svg>
       ),
-      content: <PlaceholderSection title="Diseños" />,
+      content: <DesignsSection />,
     },
   ];
 
@@ -94,7 +97,7 @@ export default function AdminPanel() {
       </main>
 
       <Footer
-        logoSrc="/src/assets/logoSi-blanco.png"
+        logoSrc={LogoSimetrica}
         logoAlt="Simétrica"
         columns={[
           {
@@ -310,16 +313,6 @@ function DashboardSection({ onNavigate }: DashboardSectionProps) {
           Administrar
         </button>
       </section>
-    </div>
-  );
-}
-
-// Componente Placeholder para secciones sin implementar
-function PlaceholderSection({ title }: { title: string }) {
-  return (
-    <div className="placeholder-section">
-      <h2>{title}</h2>
-      <p>Esta sección estará disponible próximamente.</p>
     </div>
   );
 }
