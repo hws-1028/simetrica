@@ -7,15 +7,6 @@ export const ContactStatusEnum = {
 
 export type ContactStatus = typeof ContactStatusEnum[keyof typeof ContactStatusEnum];
 
-export const ContactPriorityEnum = {
-  LOW: 'LOW',
-  MEDIUM: 'MEDIUM',
-  HIGH: 'HIGH',
-  URGENT: 'URGENT',
-} as const;
-
-export type ContactPriority = typeof ContactPriorityEnum[keyof typeof ContactPriorityEnum];
-
 export interface Contact {
   _id: string;
   fullName: string;
@@ -24,7 +15,6 @@ export interface Contact {
   subject: string;
   message: string;
   status: ContactStatus;
-  priority: ContactPriority;
   ipAddress?: string;
   userAgent?: string;
   isRead: boolean;

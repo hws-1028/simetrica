@@ -3,8 +3,14 @@
 /* Utiliza variables CSS globales del sistema existente para consistencia */
 
 .footer {
-  /* MODIFICADO: Estructura base del footer con color exacto especificado */
-  background: rgba(126, 74, 53, 0.502); /* Color exacto #7E4A3580 convertido a rgba */
+  /* MODIFICADO: Degradado diagonal de negro a gris para ambos modos */
+  background: linear-gradient(
+    135deg,
+    #000000 0%,
+    #1a1a1a 30%,
+    #2d2d2d 60%,
+    #404040 100%
+  );
   color: var(--text-color);
   padding: var(--spacing-xxl) 0 var(--spacing-lg) 0;
   position: relative;
@@ -394,7 +400,13 @@
 /* High contrast mode para mejor accesibilidad */
 @media (prefers-contrast: high) {
   .footer {
-    background: var(--background-dark);
+    background: linear-gradient(
+      135deg,
+      #000000 0%,
+      #1a1a1a 30%,
+      #2d2d2d 60%,
+      #404040 100%
+    );
     border-top: 3px solid var(--text-color);
   }
   
@@ -409,17 +421,5 @@
   
   .footer__social-link {
     border: 2px solid var(--text-color);
-  }
-}
-
-/* Dark mode enhancements */
-@media (prefers-color-scheme: dark) {
-  .footer {
-    background: linear-gradient(
-      135deg,
-      rgba(0, 0, 0, 0.95) 0%,
-      rgba(32, 32, 32, 0.9) 50%,
-      rgba(80, 70, 65, 0.1) 100%
-    );
   }
 }

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import Table from '../../components/admin/Table';
 import Badge from '../../components/admin/Badge';
+import Modal from '../../components/admin/Modal';
 import type { TableColumn } from '../../components/admin/Table';
-import type { Contact, ContactStatus, ContactPriority } from '../../types/contact.types';
-import { ContactStatusEnum, ContactPriorityEnum } from '../../types/contact.types';
+import type { Contact, ContactStatus } from '../../types/contact.types';
+import { ContactStatusEnum } from '../../types/contact.types';
 import adminContactService from '../../services/adminContactService';
 import './ContactMessagesSection.css';
 
@@ -12,6 +13,7 @@ export default function ContactMessagesSection() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+  const [activeTab, setActiveTab] = useState<'unread' | 'read'>('unread');
 
   useEffect(() => {
     loadContacts();
@@ -38,6 +40,10 @@ export default function ContactMessagesSection() {
           contact._id === id ? { ...contact, isRead: true, readAt: new Date().toISOString() } : contact
         )
       );
+      // Cerrar el modal después de marcar como leído
+      setSelectedContact(null);
+      // Mostrar notificación de éxito (opcional)
+      alert('Mensaje marcado como leído');
     } catch {
       alert('Error al marcar como leído');
     }
@@ -85,23 +91,6 @@ export default function ContactMessagesSection() {
     }
   };
 
-  const getPriorityBadgeVariant = (
-    priority: ContactPriority
-  ): 'success' | 'warning' | 'error' | 'info' | 'default' => {
-    switch (priority) {
-      case ContactPriorityEnum.URGENT:
-        return 'error';
-      case ContactPriorityEnum.HIGH:
-        return 'warning';
-      case ContactPriorityEnum.MEDIUM:
-        return 'info';
-      case ContactPriorityEnum.LOW:
-        return 'success';
-      default:
-        return 'default';
-    }
-  };
-
   const getStatusLabel = (status: ContactStatus): string => {
     const labels: Record<ContactStatus, string> = {
       PENDING: 'Pendiente',
@@ -112,56 +101,34 @@ export default function ContactMessagesSection() {
     return labels[status] || status;
   };
 
-  const getPriorityLabel = (priority: ContactPriority): string => {
-    const labels: Record<ContactPriority, string> = {
-      LOW: 'Baja',
-      MEDIUM: 'Media',
-      HIGH: 'Alta',
-      URGENT: 'Urgente',
-    };
-    return labels[priority] || priority;
-  };
+  // Filtrar mensajes según el tab activo
+  const unreadContacts = contacts.filter(contact => !contact.isRead);
+  const readContacts = contacts.filter(contact => contact.isRead);
+  const displayedContacts = activeTab === 'unread' ? unreadContacts : readContacts;
 
   const columns: TableColumn<Contact>[] = [
     {
       key: 'fullName',
       label: 'Nombre',
-      width: '15%',
+      width: '18%',
     },
     {
       key: 'email',
       label: 'Email',
-      width: '20%',
+      width: '22%',
     },
     {
       key: 'subject',
       label: 'Asunto',
-      width: '25%',
-    },
-    {
-      key: 'priority',
-      label: 'Prioridad',
-      width: '10%',
-      render: (value: unknown) => {
-        const priority = value as ContactPriority;
-        return <Badge variant={getPriorityBadgeVariant(priority)}>{getPriorityLabel(priority)}</Badge>;
-      },
+      width: '35%',
     },
     {
       key: 'status',
       label: 'Estado',
-      width: '12%',
+      width: '15%',
       render: (value: unknown) => {
         const status = value as ContactStatus;
         return <Badge variant={getStatusBadgeVariant(status)}>{getStatusLabel(status)}</Badge>;
-      },
-    },
-    {
-      key: 'isRead',
-      label: 'Leído',
-      width: '8%',
-      render: (value: unknown) => {
-        return value ? '✓' : '✗';
       },
     },
     {
@@ -200,27 +167,71 @@ export default function ContactMessagesSection() {
 
       {error && <div className="error-message">{error}</div>}
 
+      {/* Tabs para mensajes leídos/no leídos */}
+      <div className="messages-tabs">
+        <button
+          className={`messages-tab ${activeTab === 'unread' ? 'active' : ''}`}
+          onClick={() => setActiveTab('unread')}
+        >
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2"
+            style={{ marginRight: '6px' }}
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          No Leídos ({unreadContacts.length})
+        </button>
+        <button
+          className={`messages-tab ${activeTab === 'read' ? 'active' : ''}`}
+          onClick={() => setActiveTab('read')}
+        >
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2"
+            style={{ marginRight: '6px' }}
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+            <polyline points="16 10 12 14 8 10" strokeWidth="2.5"/>
+          </svg>
+          Leídos ({readContacts.length})
+        </button>
+      </div>
+
       <div className="content-layout">
-        <div className="table-container-wrapper">
-          <Table
-            columns={columns}
-            data={contacts}
-            loading={loading}
-            emptyMessage="No hay mensajes de contacto"
-            onRowClick={setSelectedContact}
-          />
-        </div>
+        <Table
+          columns={columns}
+          data={displayedContacts}
+          loading={loading}
+          emptyMessage={
+            activeTab === 'unread' 
+              ? 'No hay mensajes sin leer' 
+              : 'No hay mensajes leídos'
+          }
+          onRowClick={setSelectedContact}
+        />
+      </div>
 
+      {/* Modal para mostrar detalles */}
+      <Modal
+        isOpen={!!selectedContact}
+        onClose={() => setSelectedContact(null)}
+        title="Detalles del Mensaje"
+        size="large"
+      >
         {selectedContact && (
-          <div className="contact-detail">
-            <div className="detail-header">
-              <h3>Detalles del Mensaje</h3>
-              <button className="btn-close" onClick={() => setSelectedContact(null)}>
-                ✕
-              </button>
-            </div>
-
-            <div className="detail-content">
+          <div className="contact-detail-modal">
+            <div className="detail-grid">
               <div className="detail-field">
                 <label>Nombre:</label>
                 <span>{selectedContact.fullName}</span>
@@ -236,7 +247,7 @@ export default function ContactMessagesSection() {
                 <span>{selectedContact.phone}</span>
               </div>
 
-              <div className="detail-field">
+              <div className="detail-field full-width">
                 <label>Asunto:</label>
                 <span>{selectedContact.subject}</span>
               </div>
@@ -244,13 +255,6 @@ export default function ContactMessagesSection() {
               <div className="detail-field full-width">
                 <label>Mensaje:</label>
                 <p className="message-content">{selectedContact.message}</p>
-              </div>
-
-              <div className="detail-field">
-                <label>Prioridad:</label>
-                <Badge variant={getPriorityBadgeVariant(selectedContact.priority)}>
-                  {getPriorityLabel(selectedContact.priority)}
-                </Badge>
               </div>
 
               <div className="detail-field">
@@ -298,7 +302,7 @@ export default function ContactMessagesSection() {
             </div>
           </div>
         )}
-      </div>
+      </Modal>
     </div>
   );
 }
