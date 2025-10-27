@@ -11,6 +11,8 @@ const TrabajaConNosotrosPage = lazy(() => import("./pages/TrabajaConNosotrosPage
 const Login = lazy(() => import("./pages/auth/Login"));
 const Register = lazy(() => import("./pages/auth/Register"));
 const AdminPanel = lazy(() => import("./pages/admin/AdminPanel"));
+const DesignPage = lazy(() => import("./pages/DesignPage"));
+const DesignDetailPage = lazy(() => import("./pages/DesignDetailPage"));
 
 // Componente de loading para Suspense
 const LoadingSpinner = () => (
@@ -30,7 +32,8 @@ function App() {
           {/* Rutas futuras se agregarán aquí */}
           <Route path="/asociados" element={<div>Página de Asociados (En desarrollo)</div>} />
           <Route path="/proyectos" element={<div>Página de Proyectos (En desarrollo)</div>} />
-          <Route path="/diseños" element={<div>Página de Diseños (En desarrollo)</div>} />
+          <Route path="/diseños" element={<DesignPage />} />
+          <Route path="/diseno/:id" element={<DesignDetailPage />} />
           <Route path="/trabaja-con-nosotros" element={<TrabajaConNosotrosPage />} />
           <Route path="/contacto" element={<ContactPage />} />
           {/* Rutas de autenticación */}
