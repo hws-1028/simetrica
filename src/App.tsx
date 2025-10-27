@@ -13,6 +13,7 @@ const Register = lazy(() => import("./pages/auth/Register"));
 const AdminPanel = lazy(() => import("./pages/admin/AdminPanel"));
 const DesignPage = lazy(() => import("./pages/DesignPage"));
 const DesignDetailPage = lazy(() => import("./pages/DesignDetailPage"));
+const AsociadosPage = lazy(() => import("./pages/AsociadosPage"));
 
 // Componente de loading para Suspense
 const LoadingSpinner = () => (
@@ -30,7 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           {/* Rutas futuras se agregarán aquí */}
-          <Route path="/asociados" element={<div>Página de Asociados (En desarrollo)</div>} />
+          <Route path="/asociados" element={<AsociadosPage />} />
           <Route path="/proyectos" element={<div>Página de Proyectos (En desarrollo)</div>} />
           <Route path="/diseños" element={<DesignPage />} />
           <Route path="/diseno/:id" element={<DesignDetailPage />} />
