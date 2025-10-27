@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import HeaderLayout from '../layouts/HeaderLayout';
 import Footer from '../layouts/Footer/Footer';
+import { submitWorkApplication } from '../services/workWithUsService';
 import './styles/TrabajaConNosotrosPageStyle.css';
 
 // Datos del Footer
@@ -250,10 +251,143 @@ const TrabajaConNosotrosPage: React.FC = () => {
     }
   };
 
-  const handleEnviar = () => {
-    // Aquí se enviará a la API de Express/MongoDB
-    console.log('Datos del formulario:', formData);
-    alert('Formulario enviado (pendiente integración con backend)');
+  // Funciones de mapeo de valores del formulario a enums del backend
+  const mapExperienceLevel = (experiencia: string): string => {
+    const map: { [key: string]: string } = {
+      'Menos de un año': 'LESS_THAN_ONE',
+      '1 a 3 años': 'ONE_TO_THREE',
+      '3 a 5 años': 'THREE_TO_FIVE',
+      '5 a 10 años': 'FIVE_TO_TEN',
+      'Más de 10 años': 'MORE_THAN_TEN'
+    };
+    return map[experiencia] || experiencia;
+  };
+
+  const mapAvailability = (disponibilidad: string): string => {
+    const map: { [key: string]: string } = {
+      'Tiempo completo': 'FULL_TIME',
+      'Medio tiempo': 'PART_TIME',
+      'Solo fines de semana': 'WEEKENDS',
+      'Por contrato específico': 'CONTRACT'
+    };
+    return map[disponibilidad] || disponibilidad;
+  };
+
+  const mapProjectsRange = (rango: string): string => {
+    const map: { [key: string]: string } = {
+      '0-5': '0_5',
+      '5-10': '5_10',
+      '10-15': '10_20',
+      '15-20': '10_20',
+      '20-25': '20_30',
+      '25-30': '20_30',
+      '30-35': '30_35',
+      '35-40': 'MORE_THAN_35',
+      '40-45': 'MORE_THAN_35',
+      '45-50': 'MORE_THAN_35',
+      '50+': 'MORE_THAN_35'
+    };
+    return map[rango] || rango;
+  };
+
+  const mapSpecialties = (especialidades: string[]): string[] => {
+    const map: { [key: string]: string } = {
+      'Constructor de obra negra (Construcción y reparación de estructuras con ladrillos, cemento y otros materiales)': 'OBRA_NEGRA',
+      'Constructor de obra blanca (Terminaciones como instalación de pisos, enchapes, cielo raso, y acabados finales)': 'OBRA_BLANCA',
+      'Carpintería (Fabricación e instalación de estructuras de madera como puertas, ventanas ,muebles, closets entre otros)': 'CARPINTERIA',
+      'Electricidad (Instalaciones y mantenimiento de sistemas eléctricos)': 'ELECTRICIDAD',
+      'Plomería (Instalación y reparación de tuberías y sistemas de agua)': 'PLOMERIA',
+      'Estructuras metálicas (Fabricación e instalación de estructuras en acero y otros metales)': 'ESTRUCTURAS_METALICAS',
+      'Otro': 'OTRO'
+    };
+    return especialidades.map(esp => map[esp] || esp);
+  };
+
+  const normalizePhone = (phone: string): string => {
+    // Eliminar todos los caracteres no numéricos
+    const cleaned = phone.replace(/\D/g, '');
+    // Si tiene 10 dígitos, agregar +57
+    if (cleaned.length === 10) {
+      return `+57${cleaned}`;
+    }
+    // Si ya tiene el prefijo, devolverlo tal cual
+    if (cleaned.length === 12 && cleaned.startsWith('57')) {
+      return `+${cleaned}`;
+    }
+    return phone;
+  };
+
+  const handleEnviar = async () => {
+    try {
+      // Validar que tengamos al menos una referencia
+      if (!formData.referencias || formData.referencias.length === 0) {
+        alert('Debe agregar al menos una referencia');
+        return;
+      }
+
+      // Validar campos requeridos
+      if (!formData.nombreCompleto || !formData.numeroIdentificacion || !formData.numeroContacto || 
+          !formData.fechaNacimiento || !formData.correoElectronico || !formData.departamento || 
+          !formData.municipio || formData.especialidades.length === 0 || !formData.anosExperiencia || 
+          !formData.tieneCertificaciones || !formData.disponibilidad || !formData.cantidadProyectos) {
+        alert('Por favor completa todos los campos requeridos');
+        return;
+      }
+
+      const dataToSend = {
+        fullName: formData.nombreCompleto.trim(),
+        identificationNumber: formData.numeroIdentificacion.trim(),
+        contactNumber: normalizePhone(formData.numeroContacto.trim()),
+        birthDate: formData.fechaNacimiento,
+        email: formData.correoElectronico.trim(),
+        department: formData.departamento,
+        municipality: formData.municipio,
+        specialties: mapSpecialties(formData.especialidades),
+        otherSpecialtyDetail: formData.otroEspecialidad?.trim() || undefined,
+        experienceLevel: mapExperienceLevel(formData.anosExperiencia),
+        hasCertifications: formData.tieneCertificaciones === 'Sí',
+        availability: mapAvailability(formData.disponibilidad),
+        completedProjectsRange: mapProjectsRange(formData.cantidadProyectos),
+        constructionExperienceDescription: formData.descripcionExperiencia?.trim() || undefined,
+        projectPhotos: [],
+        references: formData.referencias.filter(ref => ref.nombre && ref.telefono).map(ref => ({
+          name: ref.nombre.trim(),
+          phone: normalizePhone(ref.telefono.trim()),
+          relationship: 'Referencia laboral',
+        })),
+        additionalComments: formData.observaciones?.trim() || undefined
+      };
+
+      console.log('Enviando datos:', dataToSend);
+      const response = await submitWorkApplication(dataToSend);
+
+      alert(response.message || 'Aplicación enviada correctamente. Nos pondremos en contacto contigo pronto.');
+      
+      // Limpiar el formulario
+      setFormData({
+        nombreCompleto: '',
+        numeroIdentificacion: '',
+        numeroContacto: '',
+        fechaNacimiento: '',
+        correoElectronico: '',
+        departamento: '',
+        municipio: '',
+        especialidades: [],
+        otroEspecialidad: '',
+        anosExperiencia: '',
+        tieneCertificaciones: '',
+        disponibilidad: '',
+        cantidadProyectos: '',
+        descripcionExperiencia: '',
+        fotosProyectos: [],
+        referencias: [{ nombre: '', telefono: '' }],
+        observaciones: ''
+      });
+      setCurrentStep(1);
+    } catch (error) {
+      console.error('Error al enviar:', error);
+      alert(error instanceof Error ? error.message : 'Error al enviar la aplicación');
+    }
   };
 
   return (
