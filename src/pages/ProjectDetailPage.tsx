@@ -2,30 +2,25 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import HeaderLayout from "../layouts/HeaderLayout";
 import Footer from "../layouts/Footer";
-import "./styles/DesignDetailPageStyle.css";
+import "./styles/ProjectDetailPageStyle.css";
 import LogoSimetrica from "../assets/logo-simetrica-blanco.png";
-import PlaceholderImage from "../assets/Diseno.png";
-import designService from '../services/designService';
+import PlaceholderImage from "../assets/project1.png";
+import projectService, { type Project } from '../services/projectService';
 import commentService, { type Comment } from '../services/commentService';
 import { useAuth } from '../context/useAuth';
-import type { Design } from '../types/design.types';
 
 const formatNumber = (num: number): string => {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + 'M';
-  }
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1) + 'K';
-  }
+  if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+  if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
   return num.toString();
 };
 
-const DesignDetailPage = () => {
+const ProjectDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { user } = useAuth();
   
-  const [design, setDesign] = useState<Design | null>(null);
+  const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [userReaction, setUserReaction] = useState<'like' | 'dislike' | null>(null);
@@ -34,37 +29,36 @@ const DesignDetailPage = () => {
   const [commentText, setCommentText] = useState('');
   const [submittingComment, setSubmittingComment] = useState(false);
 
-  const loadDesign = useCallback(async () => {
+  const loadProject = useCallback(async () => {
     if (!id) return;
     
     try {
       setLoading(true);
-      const data = await designService.getById(id);
-      setDesign(data);
+      const response = await projectService.getById(id);
+      setProject(response.data);
       setError('');
       
       // Cargar comentarios
-      const commentsData = await commentService.getDesignComments(id);
+      const commentsData = await commentService.getProjectComments(id);
       setComments(commentsData.comments);
     } catch (err) {
-      console.error('Error cargando diseño:', err);
-      setError('Error al cargar el diseño');
+      console.error('Error cargando proyecto:', err);
+      setError('Error al cargar el proyecto');
     } finally {
       setLoading(false);
     }
   }, [id]);
 
   useEffect(() => {
-    loadDesign();
-  }, [loadDesign]);
+    loadProject();
+  }, [loadProject]);
 
   useEffect(() => {
-    if (design && user) {
-      // Verificar si el usuario ya reaccionó
-      const reaction = design.reactions.find(r => r.userId === user.id);
+    if (project && user) {
+      const reaction = project.reactions.find(r => r.userId === user.id);
       setUserReaction(reaction?.type || null);
     }
-  }, [design, user]);
+  }, [project, user]);
 
   const handleReaction = async (type: 'like' | 'dislike') => {
     if (!user) {
@@ -76,11 +70,10 @@ const DesignDetailPage = () => {
     if (!id) return;
 
     try {
-      const updatedDesign = await designService.react(id, type);
-      setDesign(updatedDesign);
+      const response = await projectService.react(id, type);
+      setProject(response.data);
       
-      // Actualizar la reacción del usuario
-      const reaction = updatedDesign.reactions.find(r => r.userId === user.id);
+      const reaction = response.data.reactions.find(r => r.userId === user.id);
       setUserReaction(reaction?.type || null);
     } catch (err) {
       console.error('Error al reaccionar:', err);
@@ -107,10 +100,9 @@ const DesignDetailPage = () => {
 
     try {
       setSubmittingComment(true);
-      await commentService.createDesignComment(id, commentText.trim());
+      await commentService.createProjectComment(id, commentText.trim());
       
-      // Recargar comentarios
-      const commentsData = await commentService.getDesignComments(id);
+      const commentsData = await commentService.getProjectComments(id);
       setComments(commentsData.comments);
       
       setCommentText('');
@@ -134,9 +126,8 @@ const DesignDetailPage = () => {
     try {
       await commentService.reactToComment(commentId, type);
       
-      // Recargar comentarios
       if (id) {
-        const commentsData = await commentService.getDesignComments(id);
+        const commentsData = await commentService.getProjectComments(id);
         setComments(commentsData.comments);
       }
     } catch (err) {
@@ -151,9 +142,8 @@ const DesignDetailPage = () => {
     try {
       await commentService.deleteComment(commentId);
       
-      // Recargar comentarios
       if (id) {
-        const commentsData = await commentService.getDesignComments(id);
+        const commentsData = await commentService.getProjectComments(id);
         setComments(commentsData.comments);
       }
       
@@ -168,7 +158,7 @@ const DesignDetailPage = () => {
     return (
       <>
         <HeaderLayout />
-        <div className="loading-container">Cargando diseño...</div>
+        <div className="loading-container">Cargando proyecto...</div>
         <Footer
           logoSrc={LogoSimetrica}
           logoAlt="Logo Simétrica"
@@ -181,11 +171,11 @@ const DesignDetailPage = () => {
     );
   }
 
-  if (error || !design) {
+  if (error || !project) {
     return (
       <>
         <HeaderLayout />
-        <div className="error-container">{error || 'Diseño no encontrado'}</div>
+        <div className="error-container">{error || 'Proyecto no encontrado'}</div>
         <Footer
           logoSrc={LogoSimetrica}
           logoAlt="Logo Simétrica"
@@ -235,50 +225,58 @@ const DesignDetailPage = () => {
   return (
     <>
       <HeaderLayout />
-      <main className="design-detail">
+      <main className="project-detail">
         <button className="back-button" onClick={() => window.history.back()}>
-          Volver
+          ← Volver
         </button>
 
-        <div className="design-detail__content">
-          <div className="design-detail__gallery">
+        <div className="project-detail__content">
+          <div className="project-detail__gallery">
             <div className="main-image">
               <img 
-                src={design.imagenes[0]?.url || PlaceholderImage} 
-                alt={design.nombre} 
+                src={project.imagenes[0]?.url || PlaceholderImage} 
+                alt={project.nombre} 
               />
             </div>
             <div className="thumbnail-images">
-              {design.imagenes.slice(1, 4).map((img, idx) => (
-                <img key={idx} src={img.url} alt={`${design.nombre} - ${idx + 2}`} />
+              {project.imagenes.slice(1, 4).map((img, idx) => (
+                <img key={idx} src={img.url} alt={`${project.nombre} - ${idx + 2}`} />
               ))}
             </div>
           </div>
 
-          <div className="design-detail__info">
-            <div className="design-detail__header">
-              <div className="design-detail__title-section">
-                <div className="design-detail__title-category">
-                  <h1>{design.nombre}</h1>
+          <div className="project-detail__info">
+            <div className="project-detail__header">
+              <div className="project-detail__title-section">
+                <h1>{project.nombre}</h1>
+                <p className="project-client">Cliente: {project.cliente}</p>
+                <div className="project-metadata">
+                  <span>📍 {project.ubicacion}</span>
+                  <span>⏱️ {project.duracion}</span>
+                  <span>👥 {project.personasInvolucradas} personas</span>
                 </div>
-                <p className="design-detail__description">{design.descripcion}</p>
               </div>
-              <div className="design-detail__stats">
+              <div className="project-detail__stats">
                 <button 
                   className={`likes ${userReaction === 'like' ? 'active' : ''}`}
                   onClick={() => handleReaction('like')}
                   disabled={!user}
                 >
-                  <span className="icon">♥</span> {formatNumber(design.likes)}
+                  <span className="icon">♥</span> {formatNumber(project.likes)}
                 </button>
                 <button 
                   className={`dislikes ${userReaction === 'dislike' ? 'active' : ''}`}
                   onClick={() => handleReaction('dislike')}
                   disabled={!user}
                 >
-                  <span className="icon">×</span> {formatNumber(design.dislikes)}
+                  <span className="icon">×</span> {formatNumber(project.dislikes)}
                 </button>
               </div>
+            </div>
+
+            <div className="project-detail__description">
+              <h3>Descripción del Proyecto</h3>
+              <p>{project.descripcion}</p>
             </div>
 
             <div className="comments-section">
@@ -404,4 +402,4 @@ const DesignDetailPage = () => {
   );
 };
 
-export default DesignDetailPage;
+export default ProjectDetailPage;

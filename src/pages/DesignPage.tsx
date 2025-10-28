@@ -1,22 +1,61 @@
-import "./styles/DesignPageStyle.css"
-import HeaderLayout from "../layouts/HeaderLayout"
-import Footer from "../layouts/Footer"
-
-interface Design {
-  id: number;
-  image: string;
-  type: string;
-  title: string;
-  description: string;
-  features: string[];
-  location: string;
-  area: string;
-  year: string;
-}
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import "./styles/DesignPageStyle.css";
+import HeaderLayout from "../layouts/HeaderLayout";
+import Footer from "../layouts/Footer";
 import LogoSimetrica from "../assets/logo-simetrica-blanco.png";
-import Design from "../assets/Diseno.png"
+import PlaceholderImage from "../assets/Diseno.png";
+import designService from '../services/designService';
+import type { Design } from '../types/design.types';
 
 const DesignPage = () => {
+  const navigate = useNavigate();
+  const [designs, setDesigns] = useState<Design[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    loadDesigns();
+  }, []);
+
+  const loadDesigns = async () => {
+    try {
+      setLoading(true);
+      const response = await designService.getAll(1, 100);
+      setDesigns(response.designs);
+      setError('');
+    } catch (err) {
+      console.error('Error cargando diseños:', err);
+      setError('Error al cargar los diseños');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) {
+      loadDesigns();
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const results = await designService.search(searchQuery);
+      setDesigns(results);
+      setError('');
+    } catch (err) {
+      console.error('Error en búsqueda:', err);
+      setError('Error al buscar diseños');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDesignClick = (designId: string) => {
+    navigate(`/diseno/${designId}`);
+  };
   const footerColumns = [
     {
       title: "Servicios",
@@ -53,118 +92,6 @@ const DesignPage = () => {
   
 
 
-  const designs = [
-    { 
-      id: 1, 
-      image: Design, 
-      type: "Residencial", 
-      title: "Casa Moderna",
-      description: "Diseño moderno y minimalista para espacios residenciales contemporáneos.",
-      features: ["Espacios abiertos", "Iluminación natural", "Materiales sostenibles"],
-      location: "Bogotá",
-      area: "250m²",
-      year: "2025"
-    },
-    { 
-      id: 2, 
-      image: Design, 
-      type: "Comercial", 
-      title: "Oficina Ejecutiva",
-      description: "Espacio corporativo diseñado para maximizar la productividad y el confort.",
-      features: ["Salas de reuniones", "Áreas colaborativas", "Tecnología integrada"],
-      location: "Medellín",
-      area: "400m²",
-      year: "2024",
-      likes: 0,
-      dislikes: 0,
-      comments: []
-    },
-    { 
-      id: 3, 
-      image: Design, 
-      type: "Industrial", 
-      title: "Planta de Producción",
-      description: "Diseño industrial optimizado para eficiencia y seguridad.",
-      features: ["Flujo de trabajo optimizado", "Ventilación avanzada", "Áreas especializadas"],
-      location: "Cali",
-      area: "1200m²",
-      year: "2025",
-      likes: 0,
-      dislikes: 0,
-      comments: []
-    },
-    { 
-      id: 4, 
-      image: Design, 
-      type: "Residencial", 
-      title: "Apartamento Luxury",
-      description: "Diseño de lujo que combina elegancia y funcionalidad.",
-      features: ["Acabados premium", "Domótica", "Vistas panorámicas"],
-      location: "Bogotá",
-      area: "180m²",
-      year: "2025",
-      likes: 0,
-      dislikes: 0,
-      comments: []
-    },
-    { 
-      id: 5, 
-      image: Design, 
-      type: "Comercial", 
-      title: "Local Comercial",
-      description: "Espacio comercial diseñado para maximizar la experiencia del cliente.",
-      features: ["Vitrina destacada", "Iluminación estratégica", "Flujo de clientes optimizado"],
-      location: "Medellín",
-      area: "150m²",
-      year: "2024",
-      likes: 0,
-      dislikes: 0,
-      comments: []
-    },
-    { 
-      id: 6, 
-      image: Design, 
-      type: "Industrial", 
-      title: "Bodega Logística",
-      description: "Centro logístico con diseño eficiente para operaciones de almacenamiento.",
-      features: ["Altura optimizada", "Muelles de carga", "Sistema de ventilación"],
-      location: "Cali",
-      area: "2000m²",
-      year: "2025",
-      likes: 0,
-      dislikes: 0,
-      comments: []
-    },
-    { 
-      id: 7, 
-      image: Design, 
-      type: "Residencial", 
-      title: "Casa Campestre",
-      description: "Diseño que integra la naturaleza con el confort moderno.",
-      features: ["Grandes ventanales", "Materiales naturales", "Espacios al aire libre"],
-      location: "Medellín",
-      area: "450m²",
-      year: "2024",
-      likes: 0,
-      dislikes: 0,
-      comments: []
-    },
-    { 
-      id: 8, 
-      image: Design, 
-      type: "Comercial", 
-      title: "Centro Comercial",
-      description: "Complejo comercial con diseño moderno y funcional.",
-      features: ["Plazoleta de comidas", "Áreas de descanso", "Estacionamiento integrado"],
-      location: "Bogotá",
-      area: "5000m²",
-      year: "2025",
-      likes: 0,
-      dislikes: 0,
-      comments: []
-    }
-  ]
-
   return (
     <>
       <HeaderLayout />
@@ -174,48 +101,47 @@ const DesignPage = () => {
           <p>Transformamos tus espacios en lugares únicos y funcionales.</p>
 
           <div className="design-section__filters">
-            <input 
+            <form onSubmit={handleSearch}>
+              <input 
                 type="text" 
                 placeholder="Buscar diseños..."
                 className="filter-input"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <select className="filter-select">
-                <option value="">Categorías</option>
-                <option value="residencial">Residencial</option>
-                <option value="comercial">Comercial</option>
-                <option value="industrial">Industrial</option>
-              </select>
-              <select className="filter-select">
-                <option value="">Región</option>
-                <option value="bogota">Bogotá</option>
-                <option value="medellin">Medellín</option>
-                <option value="cali">Cali</option>
-                <option value="otras">Otras regiones</option>
-              </select>
+            </form>
           </div>
 
-          <section className="design-gallery">
-            {designs.map((proj) => (
-              <div className="design-card" key={proj.id}>
-                <img
-                  src={proj.image}
-                  alt={`${proj.title}`}
-                  className="design-card__img"
-                />
-                <div className="design-card__overlay">
-                  <div className="design-card__content">
-                    <span className="design-card__type">{proj.type}</span>
-                    <a 
-                      href={`/diseno/${proj.id}`}
-                      className="design-card__button"
-                    >
-                      Ver más
-                    </a>
+          {loading ? (
+            <div className="loading-state">Cargando diseños...</div>
+          ) : error ? (
+            <div className="error-state">{error}</div>
+          ) : designs.length === 0 ? (
+            <div className="empty-state">No se encontraron diseños</div>
+          ) : (
+            <section className="design-gallery">
+              {designs.map((design) => (
+                <div 
+                  className="design-card" 
+                  key={design._id}
+                  onClick={() => handleDesignClick(design._id)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img
+                    src={design.imagenes[0]?.url || PlaceholderImage}
+                    alt={design.nombre}
+                    className="design-card__img"
+                  />
+                  <div className="design-card__overlay">
+                    <div className="design-card__content">
+                      <h3 className="design-card__title">{design.nombre}</h3>
+                      <span className="design-card__button">Ver más</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </section>
+              ))}
+            </section>
+          )}
         </div>
       </main>
 

@@ -103,9 +103,14 @@
 
 .filters-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
+}
+
+/* Hacer que el primer item (búsqueda) ocupe solo 1 columna en lugar de auto-ajustarse */
+.filter-item:first-child {
+  grid-column: span 1;
 }
 
 .filter-item {
@@ -385,6 +390,11 @@
   .filters-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
+  }
+
+  /* Resetear el span en móvil */
+  .filter-item:first-child {
+    grid-column: span 1;
   }
 
   .filter-results {

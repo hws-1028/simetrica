@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Table from '../../components/admin/Table';
 import Modal from '../../components/admin/Modal';
+import ImagePickerModal from '../../components/admin/ImagePickerModal';
 import type { TableColumn } from '../../components/admin/Table';
 import type { Design, DesignFormData } from '../../types/design.types';
 import adminDesignService from '../../services/adminDesignService';
@@ -13,6 +14,7 @@ export default function DesignsSection() {
   const [selectedDesign, setSelectedDesign] = useState<Design | null>(null);
   const [showFormModal, setShowFormModal] = useState(false);
   const [editingDesign, setEditingDesign] = useState<Design | null>(null);
+  const [showImagePicker, setShowImagePicker] = useState(false);
   
   // Form state
   const [formData, setFormData] = useState<DesignFormData>({
@@ -356,6 +358,17 @@ export default function DesignsSection() {
               {formErrors.descripcion && <span className="error-message">{formErrors.descripcion}</span>}
               <span className="char-count">{formData.descripcion.length}/2000</span>
             </div>
+
+            <div className="form-field full-width">
+              <label>Imágenes</label>
+              <button
+                type="button"
+                className="btn-select-images"
+                onClick={() => setShowImagePicker(true)}
+              >
+                ⎘ Seleccionar Imágenes ({formData.imagenes?.length || 0})
+              </button>
+            </div>
           </div>
 
           <div className="form-actions">
@@ -377,6 +390,15 @@ export default function DesignsSection() {
           </div>
         </form>
       </Modal>
+
+      {/* Modal para Seleccionar Imágenes */}
+      <ImagePickerModal
+        isOpen={showImagePicker}
+        onClose={() => setShowImagePicker(false)}
+        onSelect={(images) => setFormData({ ...formData, imagenes: images })}
+        selectedImages={formData.imagenes}
+        multiple={true}
+      />
     </div>
   );
 }
